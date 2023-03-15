@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/title"
+    android:text="Log In"
+        android:textSize="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="26dp"
+        />
+    <Button
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btn_signup"
+        android:text="Sign Up"
+        android:layout_toRightOf="@+id/title"
+        android:textSize="16dp"
+        android:paddingTop="17dp"
+        android:layout_marginLeft="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        android:layout_marginTop="26dp"
+        android:background="@android:color/transparent"
+    />
+    <ImageView
+        android:layout_below="@id/title"
+        android:id="@+id/app_logo"
+        android:layout_width="158dp"
+        android:layout_height="158dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+     android:src="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/edt_email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/app_logo"
+        android:layout_marginHorizontal="9dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/edt_background"
+        android:hint="Log In"
+        android:paddingLeft="13dp"
+        android:textColorHint="@color/placeHolderText"
+
+        />
+
+    <EditText
+        android:id="@+id/edt_password"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/edt_email"
+        android:layout_marginHorizontal="9dp"
+        android:layout_marginTop="31dp"
+        android:background="@drawable/edt_background"
+        android:hint="Password"
+        android:paddingLeft="13dp"
+        android:textColorHint="@color/placeHolderText" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="9dp"
+        android:layout_marginTop="31dp"
+        android:background="@drawable/btn_background"
+        android:text="Login"
+        android:textColor="@color/white" />
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_signup"-->
+<!--        android:layout_width="180dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/btn_login"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@drawable/btn_background"-->
+<!--        android:text="Sign Up"-->
+<!--        android:textColor="@color/white" />-->
+</RelativeLayout>

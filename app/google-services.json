@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "545793299744",
+    "firebase_url": "https://health-app-25dac-default-rtdb.firebaseio.com",
+    "project_id": "health-app-25dac",
+    "storage_bucket": "health-app-25dac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545793299744:android:5c9f0fbf064d240db1b345",
+        "android_client_info": {
+          "package_name": "com.FCP1301.HealthApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545793299744-2b12aqb3slgbmfkpb9b1ihd4jpe1ro42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9cecTSs9eGqeU1Si5mJRrf2y8EWuYeW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545793299744-2b12aqb3slgbmfkpb9b1ihd4jpe1ro42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545793299744:android:b5298e5168cda498b1b345",
+        "android_client_info": {
+          "package_name": "com.quintonpyx.healthapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545793299744-2b12aqb3slgbmfkpb9b1ihd4jpe1ro42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9cecTSs9eGqeU1Si5mJRrf2y8EWuYeW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "545793299744-2b12aqb3slgbmfkpb9b1ihd4jpe1ro42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

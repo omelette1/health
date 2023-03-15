@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/title"
+        android:text="Your Steps Today"
+        android:textSize="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="26dp"
+        android:layout_weight="1"
+        />
+
+        <!--progress bar implementation-->
+
+    <RelativeLayout
+    android:layout_weight="2"
+        android:id="@+id/progress_layout"
+        android:layout_below="@+id/title"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        >
+
+        <!--progress bar implementation-->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/circular_shape"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            android:textAlignment="center" />
+
+        <!--Text implementation in center of the progress bar-->
+        <TextView
+            android:id="@+id/tv_stepsTaken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="---"
+            android:textColor="@color/primary"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/motivationSpeech"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_below="@+id/progress_layout"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:text="“Don't ever let someone tell you, you can't do something. Not even me. You got a dream, you got to protect it. People can’t do something themselves, they want to tell you you can’t do it. You want something, go get it. Period”
+-- The Pursuit of Happyness"
+        android:textColor="@color/placeHolderText"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        android:paddingHorizontal="20dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_weight="1"/>
+
+</LinearLayout>
