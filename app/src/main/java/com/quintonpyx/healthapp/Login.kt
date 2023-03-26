@@ -67,7 +67,7 @@ class Login : AppCompatActivity() {
 //                    Toast.makeText(baseContext, "Authentication failed.",
 //                        Toast.LENGTH_SHORT).show()
 //                    updateUI(null)
-                    Toast.makeText(this@Login,"User does not exist",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Login,"Invalid email or password",Toast.LENGTH_SHORT).show()
                 }
             }
     }

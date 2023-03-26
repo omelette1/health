@@ -1,4 +1,4 @@
-package com.quintonpyx.chatapplication
+package com.quintonpyx.healthapp
 
 import android.content.Context
 import android.content.Intent
@@ -9,9 +9,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.quintonpyx.healthapp.Food
-import com.quintonpyx.healthapp.R
 import java.util.*
+
+
+
 
 class FoodAdapter(val context: Context, val foodList: ArrayList<Food>): RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
@@ -26,7 +27,7 @@ class FoodAdapter(val context: Context, val foodList: ArrayList<Food>): Recycler
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val currentFood = foodList[position]
         holder.txtName.text = currentFood.name
-        holder.txtCalorie.text = currentFood.calorie.toString()
+        holder.txtCalorie.text = currentFood.calorie.toString() +"kcal"
 
         holder.itemView.setOnClickListener{
 //           // add food to user
@@ -42,5 +43,6 @@ class FoodAdapter(val context: Context, val foodList: ArrayList<Food>): Recycler
         val txtCalorie = itemView.findViewById<TextView>(R.id.txt_calorie)
 
     }
+
 
 }
