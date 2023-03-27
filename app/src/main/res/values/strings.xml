@@ -10,4 +10,5 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_sign_up">SignUp</string>
+    <string name="web_client_id">545793299744-v54dj86gie9l22rjvbbldqv9koheosh5.apps.googleusercontent.com</string>
 </resources>

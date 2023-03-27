@@ -104,7 +104,7 @@ class Leaderboard : AppCompatActivity() {
 
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Leaderboard,"Error: "+error.toString(),Toast.LENGTH_SHORT)
+                Toast.makeText(this@Leaderboard,"Error: "+error.toString(),Toast.LENGTH_LONG)
             }
         }
 

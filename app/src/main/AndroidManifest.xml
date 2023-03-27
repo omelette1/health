@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HealthApp">
         <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
             android:name=".MyFood"
             android:exported="false" />
         <activity
@@ -30,7 +33,8 @@
             android:name=".Login"
             android:exported="true"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.HealthApp.NoActionBar">
+            android:theme="@style/Theme.HealthApp.NoActionBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
