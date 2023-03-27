@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.quintonpyx.healthapp.User
 
 class SignUp : AppCompatActivity() {
 
@@ -83,6 +84,6 @@ class SignUp : AppCompatActivity() {
     }
     private fun addUserToDatabase(name:String, email:String, uid:String){
         mDbRef = FirebaseDatabase.getInstance().getReference()
-        mDbRef.child("user").child(uid).setValue(User(name,email,uid))
+        mDbRef.child("user").child(uid).setValue(User(name,email,uid,0))
     }
 }

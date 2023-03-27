@@ -22,10 +22,18 @@ import android.content.Intent
 import androidx.annotation.NonNull
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.quintonpyx.healthapp.helper.GeneralHelper
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.quintonpyx.healthapp.User
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
+
+    private lateinit var database: DatabaseReference
+    private lateinit var user: FirebaseUser
 
     private var sensorManager: SensorManager? = null
 
@@ -41,6 +49,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        user = FirebaseAuth.getInstance().currentUser!!
+        database = Firebase.database.reference
+
         //check if permission isn't already granted, request the permission
         if (isPermissionGranted()) {
             requestPermission()
@@ -54,9 +65,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
         // Set Home selected
-
-        // Set Home selected
-        bottomNavigationView.selectedItemId = R.id.home
+        bottomNavigationView.selectedItemId = R.id.steps
 
         // Perform item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -67,8 +76,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.steps -> return@OnNavigationItemSelectedListener false
-
+                R.id.steps -> return@OnNavigationItemSelectedListener true
+                R.id.leaderboard -> {
+                    startActivity(Intent(this@MainActivity, Leaderboard::class.java))
+                    // override default transition from page to page
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
             }
             false
         })
@@ -113,12 +127,16 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             totalSteps = event!!.values[0]
             val currentSteps = totalSteps.toInt()
 
+
             val sharedPreferences = getSharedPreferences("myPrefs",Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
 
-            if (sharedPreferences.getString("date",GeneralHelper.getTodayDate()) != GeneralHelper.getTodayDate()) {
+            if (sharedPreferences.getString("date","") != GeneralHelper.getTodayDate()) {
                 editor.putInt("steps", currentSteps)
+                Log.d("STEPSSAVED",currentSteps.toString())
                 editor.putString("date", GeneralHelper.getTodayDate())
+                editor.commit()
+
             } else {
                 val storeSteps = sharedPreferences.getInt("steps",0)
                 val sensorSteps = currentSteps
@@ -126,16 +144,17 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
                 if (finalSteps > 0) {
                     editor.putInt("finalSteps", finalSteps)
+                    editor.commit()
                 }
 
 
-                Log.d("FINALSTEP",sharedPreferences.getInt("finalSteps",0).toString())
+                Log.d("FINALSTEP",sharedPreferences.getInt("steps",0).toString())
                 Log.d("DATE", sharedPreferences.getString("date",GeneralHelper.getTodayDate())!!)
 
             }
-            editor.commit()
+//            editor.commit()
 
-//            saveData(currentSteps)
+            saveDataToFirebase(user,currentSteps)
             // set current steps in textview
             val stepsShown = sharedPreferences.getInt("finalSteps",0)
             tv_stepsTaken.text = ("$stepsShown")
@@ -147,8 +166,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         println("onAccuracyChanged: Sensor: $sensor; accuracy: $accuracy")
     }
 
-    private fun saveData(currentSteps:Int){
-        //todo:save to firebase
+    private fun saveDataToFirebase(user: FirebaseUser, currentSteps:Int){
+        val newUser = User(user.displayName,user.email,user.uid, currentSteps)
+        database.child("user").child(user.uid).setValue(newUser)
     }
 
     private fun requestPermission() {

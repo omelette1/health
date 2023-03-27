@@ -49,16 +49,22 @@ class MainActivity2 : AppCompatActivity() {
         // Set Home selected
 
         // Set Home selected
-        bottomNavigationView.selectedItemId = R.id.home
+        bottomNavigationView.selectedItemId = R.id.food
 
         // Perform item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.food ->
-                    return@OnNavigationItemSelectedListener false
+                    return@OnNavigationItemSelectedListener true
 
                 R.id.steps ->{
                     startActivity(Intent(this@MainActivity2, MainActivity::class.java))
+                    // override default transition from page to page
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.leaderboard -> {
+                    startActivity(Intent(this@MainActivity2, Leaderboard::class.java))
                     // override default transition from page to page
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true

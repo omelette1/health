@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <RelativeLayout
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/championLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="26dp"
+                android:layout_marginBottom="45dp"
+                android:text="Leaderboard"
+                android:textColor="@color/white"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/championImageCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+
+                android:layout_centerHorizontal="true"
+                app:cardCornerRadius="50dp">
+
+                <ImageView
+                    android:id="@+id/championImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:clipToOutline="true"
+                    android:src="@drawable/round_image" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/oneImageCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/championImageCard"
+                android:layout_centerHorizontal="true"
+
+                android:layout_marginBottom="21dp"
+                app:cardCornerRadius="50dp">
+
+                <ImageView
+                    android:id="@+id/oneImage"
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:clipToOutline="true"
+                    android:src="@drawable/round_image" />
+            </androidx.cardview.widget.CardView>
+
+            <EditText
+                android:id="@+id/edtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/oneImageCard"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent"
+                android:text="John Doe"
+                android:textColor="@color/white"
+                android:textSize="24dp" />
+
+            <EditText
+                android:id="@+id/edtSteps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="29dp"
+                android:background="@android:color/transparent"
+                android:text="1000000 steps"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/userRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/championLayout"
+            tools:listitem="@layout/food_layout" />
+    </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/primary"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
+        app:menu="@menu/menu_navigation" />
+</RelativeLayout>

@@ -7,17 +7,21 @@
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable-v24/btn_background.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable-v24/edt_background.xml" value="0.1" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable-v24/message_box_background.xml" value="0.15104166666666666" />
+        <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable/btn_add.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable/btn_background.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable/circular_progress_bar.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable/circular_shape.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable/edt_background.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.15104166666666666" />
+        <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable/round_image.xml" value="0.12760416666666666" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/drawable/selector.xml" value="0.2635416666666667" />
+        <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/layout/activity_leaderboard.xml" value="0.176" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/layout/activity_main.xml" value="0.12907608695652173" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/layout/activity_main2.xml" value="0.152" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/layout/activity_sign_up.xml" value="0.152" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/layout/food_layout.xml" value="0.176" />
+        <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/layout/user_layout.xml" value="0.152" />
         <entry key="..\:/Users/quint/AndroidStudioProjects/HealthApp/app/src/main/res/menu/menu_navigation.xml" value="0.13489583333333333" />
       </map>
     </option>

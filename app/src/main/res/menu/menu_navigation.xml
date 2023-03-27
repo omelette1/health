@@ -3,11 +3,15 @@
 
     <item
         android:id="@+id/steps"
-        android:title="steps"
+        android:title="Steps"
         android:icon="@drawable/logo"/>
     <item
         android:id="@+id/food"
-        android:title="food"
+        android:title="Food"
+        android:icon="@drawable/logo"/>
+    <item
+        android:id="@+id/leaderboard"
+        android:title="Leaderboard"
         android:icon="@drawable/logo"/>
 
 </menu>
