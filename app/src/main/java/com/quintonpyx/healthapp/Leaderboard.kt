@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -57,6 +58,17 @@ class Leaderboard : AppCompatActivity() {
                 R.id.leaderboard -> {
                     return@OnNavigationItemSelectedListener true
                 }
+                R.id.myFood -> {
+                    startActivity(Intent(this@Leaderboard, MyFood::class.java))
+                    // override default transition from page to page
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true                }
+                R.id.logout->{
+                    FirebaseAuth.getInstance().signOut()
+                    startActivity(Intent(this@Leaderboard, Login::class.java))
+                    // override default transition from page to page
+//                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true                }
 
 
             }

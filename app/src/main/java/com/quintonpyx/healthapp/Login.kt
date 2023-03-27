@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import okhttp3.internal.trimSubstring
 
 class Login : AppCompatActivity() {
 
@@ -42,7 +43,7 @@ class Login : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
-            val email = edtEmail.text.toString()
+            val email = edtEmail.text.toString().trim()
             val password = edtPassword.text.toString()
 
             login(email, password)

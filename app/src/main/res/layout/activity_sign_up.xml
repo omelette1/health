@@ -54,17 +54,17 @@
         android:background="@drawable/edt_background"
         android:paddingLeft="13dp"
         />
+
     <EditText
         android:id="@+id/edt_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/edt_email"
-        android:layout_marginTop="41dp"
-        android:hint="Password"
         android:layout_marginHorizontal="9dp"
+        android:layout_marginTop="41dp"
         android:background="@drawable/edt_background"
-        android:paddingLeft="13dp"
-        />
+        android:hint="Password"
+        android:paddingLeft="13dp" />
 
 
     <Button

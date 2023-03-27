@@ -83,6 +83,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
+                R.id.myFood -> {
+                    startActivity(Intent(this@MainActivity, MyFood::class.java))
+                    // override default transition from page to page
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+
+                }
+                R.id.logout->{
+                    FirebaseAuth.getInstance().signOut()
+                    startActivity(Intent(this@MainActivity, Login::class.java))
+                    // override default transition from page to page
+//                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true                }
             }
             false
         })

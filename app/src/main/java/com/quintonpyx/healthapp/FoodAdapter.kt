@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.quintonpyx.healthapp.helper.GeneralHelper
 import java.util.*
 
 
@@ -42,7 +44,8 @@ class FoodAdapter(val context: Context, val foodList: ArrayList<Food>): Recycler
             // generate random key
             val key = database.push().key
             if (key != null) {
-                database.child("userFood").child(key).setValue(UserFood(user.uid,currentFood.name,currentFood.calorie))
+                database.child("userFood").child(key).setValue(UserFood(key,user.uid,currentFood.name,currentFood.calorie,GeneralHelper.getTodayDate()))
+                Toast.makeText(this.context,"Food has been added successfully",Toast.LENGTH_SHORT)
             }
 
         }

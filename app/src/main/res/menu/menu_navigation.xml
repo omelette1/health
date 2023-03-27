@@ -13,5 +13,12 @@
         android:id="@+id/leaderboard"
         android:title="Leaderboard"
         android:icon="@drawable/logo"/>
-
+    <item
+        android:id="@+id/myFood"
+        android:title="My Food"
+        android:icon="@drawable/logo"/>
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@drawable/logo"/>
 </menu>
