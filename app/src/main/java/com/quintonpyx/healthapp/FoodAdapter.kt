@@ -38,14 +38,17 @@ class FoodAdapter(val context: Context, val foodList: ArrayList<Food>): Recycler
         holder.txtCalorie.text = currentFood.calorie.toString() +"kcal"
 
         holder.btnAdd.setOnClickListener {
-            // add food
-            user = FirebaseAuth.getInstance().currentUser!!
-            database = Firebase.database.reference
-            // generate random key
-            val key = database.push().key
-            if (key != null) {
-                database.child("userFood").child(key).setValue(UserFood(key,user.uid,currentFood.name,currentFood.calorie,GeneralHelper.getTodayDate()))
-                Toast.makeText(this.context,"Food has been added successfully",Toast.LENGTH_LONG).show()
+            if(currentFood.name!="Searching..."){
+                // add food
+                user = FirebaseAuth.getInstance().currentUser!!
+                database = Firebase.database.reference
+                // generate random key
+                val key = database.push().key
+                if (key != null) {
+                    database.child("userFood").child(key).setValue(UserFood(key,user.uid,currentFood.name,currentFood.calorie,GeneralHelper.getTodayDate()))
+                    Toast.makeText(this.context,"Food has been added successfully",Toast.LENGTH_LONG).show()
+                }
+
             }
 
         }

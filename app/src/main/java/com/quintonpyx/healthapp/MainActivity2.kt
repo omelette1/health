@@ -144,10 +144,16 @@ class MainActivity2 : AppCompatActivity() {
     private fun subscribe() {
         mainViewModel.isLoading.observe(this) { isLoading ->
             // Is sending the API request
+            foodList.add(Food("Searching...",0))
+            adapter.notifyDataSetChanged()
         }
 
         mainViewModel.isError.observe(this) { isError ->
             // Encountered an error in the process
+            if(isError){
+                Toast.makeText(this,"Unexpected error occured",Toast.LENGTH_LONG).show()
+
+            }
         }
 
         mainViewModel.foodData.observe(this) { foodData ->

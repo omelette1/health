@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var database: DatabaseReference
     private lateinit var user: FirebaseUser
+    private lateinit var txtUnit: TextView
+
 
     private var sensorManager: SensorManager? = null
 
@@ -53,11 +55,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        user = FirebaseAuth.getInstance().currentUser!!
+        database = Firebase.database.reference
+        txtUnit = findViewById(R.id.txtUnit)
         val eventListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     val currentUser = snapshot.getValue(User::class.java) as User
-
+                    txtUnit .setText("/ "+currentUser.targetSteps.toString()+" steps")
                 } else {
 
 
@@ -66,16 +71,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Profile,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
             }
         }
 
-        val snapshot = mDbRef.child("user").child(user.uid)
+        val snapshot = database.child("user").child(user.uid)
             .addListenerForSingleValueEvent(eventListener)
 
 
-        user = FirebaseAuth.getInstance().currentUser!!
-        database = Firebase.database.reference
 
         //check if permission isn't already granted, request the permission
         if (isPermissionGranted()) {

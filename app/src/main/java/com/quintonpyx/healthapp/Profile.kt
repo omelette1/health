@@ -3,18 +3,28 @@ package com.quintonpyx.healthapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
-import androidx.core.graphics.toColorInt
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.util.CollectionUtils.mapOf
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import java.util.*
+import android.graphics.drawable.Drawable
+import android.util.Log
+import java.io.InputStream
+import java.net.URL
+import android.graphics.Bitmap
+
+import android.graphics.BitmapFactory
+
+import android.os.AsyncTask
+
+
+
+
 
 class Profile : AppCompatActivity() {
     private lateinit var user: FirebaseUser
@@ -123,7 +133,7 @@ class Profile : AppCompatActivity() {
         val snapshot = mDbRef.child("user").child(user.uid)
             .addListenerForSingleValueEvent(eventListener)
 
-        imgProfile.setImageURI(user?.photoUrl)
+        DownloadImageTask(imgProfile).execute(user.photoUrl.toString())
         txtName.setText(user?.displayName)
         txtUid.setText("UID: "+user?.uid)
         txtNameDetail.setText(user?.displayName)
@@ -143,5 +153,36 @@ class Profile : AppCompatActivity() {
             googleSignInClient.signOut()
             startActivity(Intent(this@Profile,Login::class.java))
         }
+    }
+
+    fun loadImageFromWebOperations(url: String?): Drawable? {
+        try {
+            val `is`: InputStream = URL(url).getContent() as InputStream
+             return Drawable.createFromStream(`is`, "src name")
+        } catch (e: Exception) {
+            Log.d("IMAGEERROR",e.toString())
+            return null
+        }
+    }
+    private class DownloadImageTask(var bmImage: ImageView) :
+        AsyncTask<String?, Void?, Bitmap?>() {
+        override fun doInBackground(vararg p0: String?): Bitmap? {
+            val urldisplay = p0[0]
+            var mIcon11: Bitmap? = null
+            try {
+                val `in` = URL(urldisplay).openStream()
+                mIcon11 = BitmapFactory.decodeStream(`in`)
+            } catch (e: Exception) {
+                Log.e("Error", e.message!!)
+                e.printStackTrace()
+            }
+            return mIcon11
+        }
+
+        override fun onPostExecute(result: Bitmap?) {
+            bmImage.setImageBitmap(result)
+        }
+
+
     }
 }
