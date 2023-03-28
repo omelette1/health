@@ -84,12 +84,12 @@ class MyFood : AppCompatActivity() {
 
                 }
 
-                R.id.logout->{
-                    FirebaseAuth.getInstance().signOut()
-                    startActivity(Intent(this@MyFood, Login::class.java))
+                R.id.profile -> {
+                    startActivity(Intent(this@MyFood, Profile::class.java))
                     // override default transition from page to page
-//                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true                }
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
 
             }
             false
@@ -127,7 +127,7 @@ class MyFood : AppCompatActivity() {
 
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@MyFood,"Error: "+error.toString(),Toast.LENGTH_SHORT)
+                Toast.makeText(this@MyFood,"Error: "+error.toString(),Toast.LENGTH_LONG).show()
             }
         }
 

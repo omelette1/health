@@ -75,13 +75,12 @@ class MainActivity2 : AppCompatActivity() {
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.logout->{
-                    FirebaseAuth.getInstance().signOut()
-                    startActivity(Intent(this@MainActivity2, Login::class.java))
+                R.id.profile -> {
+                    startActivity(Intent(this@MainActivity2, Profile::class.java))
                     // override default transition from page to page
-//                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true                }
-
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
 
             }
             false
@@ -112,7 +111,7 @@ class MainActivity2 : AppCompatActivity() {
 
                 if (searchKey.isNullOrEmpty() or searchKey.isNullOrBlank()) {
 //                    searchKey.error = "Field can't be null"
-                Toast.makeText(this@MainActivity2,"Search cannot be empty",Toast.LENGTH_LONG)
+                Toast.makeText(this@MainActivity2,"Search cannot be empty",Toast.LENGTH_LONG).show()
             }else{
                     mainViewModel.getFoodData(searchKey.toString())
 

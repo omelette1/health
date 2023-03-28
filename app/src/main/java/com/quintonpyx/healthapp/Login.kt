@@ -22,7 +22,6 @@ import java.util.*
 
 class Login : AppCompatActivity() {
 
-    private val RC_SIGN_IN:Int = 2  // Can be any integer unique to the Activity
     private lateinit var edtEmail: EditText
     private lateinit var edtPassword: EditText
     private lateinit var btnLogin: Button
@@ -108,7 +107,7 @@ class Login : AppCompatActivity() {
 //                    Toast.makeText(baseContext, "Authentication failed.",
 //                        Toast.LENGTH_SHORT).show()
 //                    updateUI(null)
-                    Toast.makeText(this@Login,"Invalid email or password",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Login,"Invalid email or password",Toast.LENGTH_LONG).show()
                 }
             }
     }

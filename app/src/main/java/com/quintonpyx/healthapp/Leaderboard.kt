@@ -63,13 +63,12 @@ class Leaderboard : AppCompatActivity() {
                     // override default transition from page to page
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true                }
-                R.id.logout->{
-                    FirebaseAuth.getInstance().signOut()
-                    startActivity(Intent(this@Leaderboard, Login::class.java))
+                R.id.profile -> {
+                    startActivity(Intent(this@Leaderboard, Profile::class.java))
                     // override default transition from page to page
-//                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true                }
-
+                    overridePendingTransition(0, 0)
+                    return@OnNavigationItemSelectedListener true
+                }
 
             }
             false
@@ -104,7 +103,7 @@ class Leaderboard : AppCompatActivity() {
 
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Leaderboard,"Error: "+error.toString(),Toast.LENGTH_LONG)
+                Toast.makeText(this@Leaderboard,"Error: "+error.toString(),Toast.LENGTH_LONG).show()
             }
         }
 

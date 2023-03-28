@@ -62,7 +62,7 @@ class SignUp : AppCompatActivity() {
 //                    updateUI(user)
                     addUserToDatabase(name,email, mAuth.currentUser?.uid!!)
                     val intent = Intent(this@SignUp,Login::class.java)
-                    Toast.makeText(this@SignUp, "Signed up successfully, please log in.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignUp, "Signed up successfully, please log in.", Toast.LENGTH_LONG).show()
                     finish()
                     startActivity(intent)
 
@@ -74,7 +74,7 @@ class SignUp : AppCompatActivity() {
 //                    updateUI(null)
 //                    Toast.makeText(this@SignUp, "Some error occured.", Toast.LENGTH_SHORT).show()
 
-                        Toast.makeText(this@SignUp, task.exception.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignUp, task.exception.toString(), Toast.LENGTH_LONG).show()
 
                 }
             }

@@ -17,8 +17,9 @@
         android:id="@+id/myFood"
         android:title="My Food"
         android:icon="@drawable/logo"/>
+
     <item
-        android:id="@+id/logout"
-        android:title="Logout"
+        android:id="@+id/profile"
+        android:title="Profile"
         android:icon="@drawable/logo"/>
 </menu>

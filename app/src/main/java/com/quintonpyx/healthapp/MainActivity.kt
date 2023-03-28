@@ -28,7 +28,11 @@ import com.google.firebase.ktx.Firebase
 import com.quintonpyx.healthapp.helper.GeneralHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.quintonpyx.healthapp.User
+import java.util.*
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
@@ -48,6 +52,27 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val eventListener = object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    val currentUser = snapshot.getValue(User::class.java) as User
+
+                } else {
+
+
+                }
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@Profile,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
+            }
+        }
+
+        val snapshot = mDbRef.child("user").child(user.uid)
+            .addListenerForSingleValueEvent(eventListener)
+
 
         user = FirebaseAuth.getInstance().currentUser!!
         database = Firebase.database.reference
@@ -90,12 +115,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     return@OnNavigationItemSelectedListener true
 
                 }
-                R.id.logout->{
-                    FirebaseAuth.getInstance().signOut()
-                    startActivity(Intent(this@MainActivity, Login::class.java))
+                R.id.profile -> {
+                    startActivity(Intent(this@MainActivity, Profile::class.java))
                     // override default transition from page to page
 //                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true                }
+                    return@OnNavigationItemSelectedListener true
+                }
+
+//
+
             }
             false
         })
@@ -113,7 +141,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         if (stepSensor == null) {
             // show toast message, if there is no sensor in the device
-            Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_LONG).show()
         } else {
             // register listener with sensorManager
             sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
@@ -146,7 +174,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
             if (sharedPreferences.getString("date","") != GeneralHelper.getTodayDate()) {
                 editor.putInt("steps", currentSteps)
-                Log.d("STEPSSAVED",currentSteps.toString())
+//                Log.d("STEPSSAVED",currentSteps.toString())
                 editor.putString("date", GeneralHelper.getTodayDate())
                 editor.commit()
 
@@ -161,8 +189,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 }
 
 
-                Log.d("FINALSTEP",sharedPreferences.getInt("steps",0).toString())
-                Log.d("DATE", sharedPreferences.getString("date",GeneralHelper.getTodayDate())!!)
+//                Log.d("FINALSTEP",sharedPreferences.getInt("steps",0).toString())
+//                Log.d("DATE", sharedPreferences.getString("date",GeneralHelper.getTodayDate())!!)
 
             }
 //            editor.commit()
@@ -181,7 +209,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private fun saveDataToFirebase(user: FirebaseUser, currentSteps:Int){
         val newUser = User(user.displayName,user.email,user.uid, currentSteps)
-        database.child("user").child(user.uid).setValue(newUser)
+        val childUpdates= HashMap<String,Any>()
+        childUpdates.put("steps",currentSteps)
+        database.child("user").child(user.uid).updateChildren(childUpdates)
     }
 
     private fun requestPermission() {

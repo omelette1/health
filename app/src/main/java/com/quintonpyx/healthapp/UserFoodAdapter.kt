@@ -44,7 +44,7 @@ class UserFoodAdapter(val context: Context, val userFoodList: ArrayList<UserFood
 
                 database.child("userFood").orderByChild("uid").equalTo(currentUserFood.uid).ref.removeValue()
                 notifyDataSetChanged()
-                Toast.makeText(this.context,"Food has been removed successfully", Toast.LENGTH_SHORT)
+                Toast.makeText(this.context,"Food has been removed successfully", Toast.LENGTH_LONG).show()
 
 
         }

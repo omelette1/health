@@ -45,7 +45,7 @@ class FoodAdapter(val context: Context, val foodList: ArrayList<Food>): Recycler
             val key = database.push().key
             if (key != null) {
                 database.child("userFood").child(key).setValue(UserFood(key,user.uid,currentFood.name,currentFood.calorie,GeneralHelper.getTodayDate()))
-                Toast.makeText(this.context,"Food has been added successfully",Toast.LENGTH_LONG)
+                Toast.makeText(this.context,"Food has been added successfully",Toast.LENGTH_LONG).show()
             }
 
         }
