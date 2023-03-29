@@ -21,7 +21,7 @@ class ApiConfig {
 
             // Retrofit
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://edamam-food-and-grocery-database.p.rapidapi.com/")
+                .baseUrl("https://api.edamam.com/api/food-database/")
                 .addConverterFactory(GsonConverterFactory.create())
 
                 .client(client)

@@ -103,7 +103,6 @@ class MainActivity2 : AppCompatActivity() {
 
         var searchKey = edtSearch.text
         mainViewModel = MainViewModel()
-        subscribe()
 
         // fetch data from api
         btnSearch.setOnClickListener {
@@ -117,7 +116,7 @@ class MainActivity2 : AppCompatActivity() {
 
                 }
             }
-//
+        subscribe(btnSearch)
 
         }
 
@@ -141,10 +140,13 @@ class MainActivity2 : AppCompatActivity() {
 //    }
 
 
-    private fun subscribe() {
+    private fun subscribe(btnSearch:Button) {
         mainViewModel.isLoading.observe(this) { isLoading ->
             // Is sending the API request
             foodList.add(Food("Searching...",0))
+            // disable search button when searching
+            btnSearch?.isEnabled = false
+            btnSearch?.isClickable = false
             adapter.notifyDataSetChanged()
         }
 
@@ -157,6 +159,9 @@ class MainActivity2 : AppCompatActivity() {
         }
 
         mainViewModel.foodData.observe(this) { foodData ->
+            // reset search button
+            btnSearch?.isEnabled = true
+            btnSearch?.isClickable = true
             // Display food data to the UI
             foodList.clear()
             for(item in foodData.hints){

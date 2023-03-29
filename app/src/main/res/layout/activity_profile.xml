@@ -39,13 +39,13 @@
                 android:id="@+id/imgProfile"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="9dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="2dp"
                 android:adjustViewBounds="true"
                 android:padding="3dp"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/profilepic" />
 
         </RelativeLayout>

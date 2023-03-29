@@ -22,6 +22,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.quintonpyx.healthapp.FoodAdapter
+import com.quintonpyx.healthapp.helper.GeneralHelper
 import com.quintonpyx.healthapp.viewModel.MainViewModel
 
 import okhttp3.OkHttpClient
@@ -112,12 +113,24 @@ class MyFood : AppCompatActivity() {
 
                 var totalCalorie = 0
                 userFoodList.clear()
+                var arr = ArrayList<UserFood>()
                 for(userFoodSnapshot in snapshot.children){
                     val userFood = userFoodSnapshot.getValue(UserFood::class.java)
-                    userFoodList.add(userFood as UserFood)
-                    totalCalorie += userFood.calorie!!
+                    arr.add(userFood as UserFood)
+                    if(userFood.date?.equals(GeneralHelper.getTodayDate()) == true){
+                        totalCalorie += userFood.calorie!!
+
+                    }
 //                    Log.d("USERS", userSnapshot.value)
                 }
+
+                var sortedList = arr.sortedWith(compareBy({it.date}))
+                for (obj in sortedList) {
+                    userFoodList.add(obj)
+                }
+
+                userFoodList.reverse()
+
 
                 txtCalorie.setText(totalCalorie.toString())
 

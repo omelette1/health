@@ -80,8 +80,8 @@ class SignUp : AppCompatActivity() {
 //                    updateUI(null)
 //                    Toast.makeText(this@SignUp, "Some error occured.", Toast.LENGTH_SHORT).show()
 
-                    Toast.makeText(this@SignUp, task.exception.toString(), Toast.LENGTH_LONG).show()
-
+                    Toast.makeText(this@SignUp, task.exception?.message, Toast.LENGTH_LONG).show()
+                    Log.e("SIGN UP ERROR: ",task.exception.toString())
                 }
             }
 

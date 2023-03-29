@@ -36,15 +36,16 @@ class UserFoodAdapter(val context: Context, val userFoodList: ArrayList<UserFood
         val currentUserFood = userFoodList[position]
         holder.txtName.text = currentUserFood.food
         holder.txtCalorie.text = currentUserFood.calorie.toString() +" kcal"
+        holder.txtDate.text = currentUserFood.date
 
         holder.btnDelete.setOnClickListener {
             // add food
             user = FirebaseAuth.getInstance().currentUser!!
             database = Firebase.database.reference
 
-                database.child("userFood").orderByChild("uid").equalTo(currentUserFood.uid).ref.removeValue()
+                database.child("userFood").child(currentUserFood.uid!!).removeValue()
                 notifyDataSetChanged()
-                Toast.makeText(this.context,"Food has been removed successfully", Toast.LENGTH_LONG).show()
+                Toast.makeText(this.context,"Food has been removed successfully", Toast.LENGTH_SHORT).show()
 
 
         }
@@ -61,6 +62,7 @@ class UserFoodAdapter(val context: Context, val userFoodList: ArrayList<UserFood
         val txtName = itemView.findViewById<TextView>(R.id.txt_name)
         val txtCalorie = itemView.findViewById<TextView>(R.id.txt_calorie)
         val btnDelete = itemView.findViewById<TextView>(R.id.btnDelete)
+        val txtDate = itemView.findViewById<TextView>(R.id.txt_date)
 
     }
 

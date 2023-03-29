@@ -7,13 +7,12 @@ import retrofit2.Call
 import retrofit2.http.Headers
 
 interface ApiService {
-    @Headers(
-        "X-RapidAPI-Key:c4e567f282msh35734da17d5f182p1a9b11jsne27d65ec649f",
-        "X-RapidAPI-Host:edamam-food-and-grocery-database.p.rapidapi.com"
-    )
-    @GET("parser")
+
+    @GET("v2/parser")
     fun getFood(
         @Query("ingr") key: String,
+        @Query("app_id") appId:String = "422f54c0",
+        @Query("app_key")appKey:String = "2e1b03b824db5d6af9e8ced4e184079c",
 
         ): Call<ResponseObject>
 }
