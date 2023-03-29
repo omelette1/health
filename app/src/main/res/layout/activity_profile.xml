@@ -47,7 +47,7 @@
                 android:background="@color/gray"
                 android:padding="3dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/logo" />
+                app:srcCompat="@drawable/logo" />
 
         </RelativeLayout>
 
@@ -58,6 +58,7 @@
             android:layout_below="@+id/imgUser"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15sp"
+            android:layout_marginBottom="5sp"
             android:fontFamily="sans-serif-light"
             android:text="Joey Tribbiani"
             android:textColor="@color/white"
@@ -130,8 +131,10 @@
 
 
     <RelativeLayout
+        android:id="@+id/relLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/linlay1">
 
         <LinearLayout
@@ -240,10 +243,11 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_weight="5"
-                    android:orientation="vertical"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_width="0dp">
+                    android:layout_weight="5"
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -252,22 +256,23 @@
                         android:textSize="13sp" />
 
                     <EditText
-                        android:inputType="number"
-                        android:background="@android:color/transparent"
                         android:id="@+id/edtTargetSteps"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
                         android:fontFamily="sans-serif-light"
-                        android:text="0"
+                        android:hint="Enter your targeted daily steps here."
+                        android:inputType="number"
                         android:textColor="#000000"
                         android:textSize="18sp" />
                 </LinearLayout>
+
                 <Button
-                    android:layout_weight="1"
                     android:id="@+id/btn_save"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/edt_password"
+                    android:layout_weight="1"
                     android:background="@drawable/btn_background"
                     android:text="SAVE"
                     android:textColor="@color/white" />
@@ -276,10 +281,10 @@
             </LinearLayout>
 
 
-
         </LinearLayout>
 
     </RelativeLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"

@@ -41,7 +41,12 @@ class SignUp : AppCompatActivity() {
             val email = edtEmail.text.toString()
             val password = edtPassword.text.toString()
 
-            signUp(name,email, password)
+            if ((name.isEmpty()) or (email.isEmpty()) or (password.isEmpty())) {
+                Toast.makeText(this, "Please fill up all fields to sign up.", Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                signUp(name, email, password)
+            }
         }
 
         btnLogin.setOnClickListener{
@@ -51,7 +56,7 @@ class SignUp : AppCompatActivity() {
         }
     }
 
-    private fun signUp(name:String, email:String,password:String){
+    private fun signUp(name:String, email:String, password:String){
         // referenced from google firebase android password authentication documentation
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
@@ -67,6 +72,7 @@ class SignUp : AppCompatActivity() {
                     startActivity(intent)
 
                 } else {
+
                     // If sign in fails, display a message to the user.
 //                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
 //                    Toast.makeText(baseContext, "Authentication failed.",
@@ -74,7 +80,7 @@ class SignUp : AppCompatActivity() {
 //                    updateUI(null)
 //                    Toast.makeText(this@SignUp, "Some error occured.", Toast.LENGTH_SHORT).show()
 
-                        Toast.makeText(this@SignUp, task.exception.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@SignUp, task.exception.toString(), Toast.LENGTH_LONG).show()
 
                 }
             }

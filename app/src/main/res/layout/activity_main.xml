@@ -8,19 +8,18 @@
     android:orientation="vertical">
 
     <TextView
-        android:textAlignment="center"
-        android:layout_gravity="center_horizontal"
-        android:layout_centerHorizontal="true"
         android:id="@+id/title"
-        android:text="Your Steps Today"
-        android:textSize="50dp"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="26dp"
         android:layout_weight="1"
-        />
+        android:text="Your Steps Today"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:textStyle="bold" />
 
         <!--progress bar implementation-->
 

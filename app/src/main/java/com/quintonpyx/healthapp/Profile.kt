@@ -118,6 +118,7 @@ class Profile : AppCompatActivity() {
                     val currentUser = snapshot.getValue(User::class.java) as User
                     txtSteps.setText(currentUser.steps.toString())
                     edtTargetSteps.setText(currentUser.targetSteps.toString())
+                    txtName.setText(currentUser.name.toString())
                 } else {
 
 
@@ -129,6 +130,14 @@ class Profile : AppCompatActivity() {
                 Toast.makeText(this@Profile,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
             }
         }
+
+//        val getData = object: ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if(snapshot.exists()){
+//                    val currentUser = snapshot.getValue(User::)
+//                }
+//            }
+//        }
 
         val snapshot = mDbRef.child("user").child(user.uid)
             .addListenerForSingleValueEvent(eventListener)
