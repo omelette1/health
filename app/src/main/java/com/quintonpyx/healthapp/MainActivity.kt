@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 R.id.profile -> {
                     startActivity(Intent(this@MainActivity, Profile::class.java))
                     // override default transition from page to page
-//                    overridePendingTransition(0, 0)
+                    overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
 

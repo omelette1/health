@@ -44,10 +44,9 @@
                 android:layout_marginEnd="9dp"
                 android:layout_marginBottom="9dp"
                 android:adjustViewBounds="true"
-                android:background="@color/gray"
                 android:padding="3dp"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/logo" />
+                app:srcCompat="@drawable/profilepic" />
 
         </RelativeLayout>
 
@@ -261,7 +260,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:fontFamily="sans-serif-light"
-                        android:hint="Enter your targeted daily steps here."
+                        android:hint="Enter target"
                         android:inputType="number"
                         android:textColor="#000000"
                         android:textSize="18sp" />

@@ -119,6 +119,7 @@ class Profile : AppCompatActivity() {
                     txtSteps.setText(currentUser.steps.toString())
                     edtTargetSteps.setText(currentUser.targetSteps.toString())
                     txtName.setText(currentUser.name.toString())
+                    txtNameDetail.setText(currentUser.name.toString())
                 } else {
 
 
@@ -189,9 +190,8 @@ class Profile : AppCompatActivity() {
         }
 
         override fun onPostExecute(result: Bitmap?) {
-            bmImage.setImageBitmap(result)
+            if (result != null)
+                bmImage.setImageBitmap(result)
         }
-
-
     }
 }
