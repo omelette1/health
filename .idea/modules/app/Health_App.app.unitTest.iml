@@ -13,6 +13,7 @@
           <stringArguments>
             <stringArg name="classpath">
               <args>
+                <arg>$MODULE_DIR$/../../../app/build/intermediates/compile_and_runtime_not_namespaced_r_class_jar/debug/R.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/39960befa7edf201ebd9ecdb31b8cb2e/transformed/jetified-logging-interceptor-4.9.0.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/bb8809ba1ca24e2e0469fb37639cca1e/transformed/jetified-firebase-auth-ktx-21.1.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/afe5ee1849014b1ce52497bbf9f10a7a/transformed/jetified-firebase-database-ktx-20.1.0-api.jar</arg>
