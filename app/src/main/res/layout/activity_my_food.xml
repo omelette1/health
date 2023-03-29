@@ -7,33 +7,38 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="35dp"
+        android:orientation="vertical">
 
-        android:layout_gravity="center"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/title"
-        android:text="Your Calories Today"
-        android:textSize="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="26dp"
-        android:layout_weight="1"
-        />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Your Calories Today"
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!--progress bar implementation-->
 
+
     <RelativeLayout
-        android:gravity="bottom"
-        android:layout_weight="2"
         android:id="@+id/progress_layout"
-        android:layout_below="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/title_layout"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        >
+        android:layout_weight="2"
+        android:gravity="center">
 
         <!--Text implementation in center of the progress bar-->
         <TextView
@@ -41,11 +46,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:text="---"
             android:textColor="@color/primary"
-            android:textSize="28sp"
+            android:textSize="40sp"
             android:textStyle="bold" />
 
         <TextView
@@ -55,10 +62,11 @@
             android:layout_below="@+id/tv_calories"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="40dp"
             android:gravity="center"
             android:text="kcal"
             android:textColor="@color/placeHolderText"
-            android:textSize="10dp"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -66,13 +74,10 @@
             android:layout_width="match_parent"
             android:layout_height="450dp"
             android:layout_below="@+id/txtUnit"
+            android:layout_gravity="bottom"
             tools:listitem="@layout/food_layout" />
 
     </RelativeLayout>
-
-
-
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

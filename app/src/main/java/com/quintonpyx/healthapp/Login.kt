@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.autofill.Validators.and
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -66,8 +67,15 @@ class Login : AppCompatActivity() {
         btnLogin.setOnClickListener {
             val email = edtEmail.text.toString().trim()
             val password = edtPassword.text.toString()
-
-            login(email, password)
+            if ((email.isEmpty()) and (password.isEmpty()== false)){
+                Toast.makeText(this, "Please enter your email to login.", Toast.LENGTH_LONG).show()
+            }else if ((password.isEmpty()) and (email.isEmpty()==false)){
+                Toast.makeText(this, "Please enter your password to login.", Toast.LENGTH_LONG).show()
+            }else if ((email.isEmpty()) and (password.isEmpty())){
+                Toast.makeText(this, "Please enter your email and password to login.", Toast.LENGTH_LONG).show()
+            }else {
+                 login(email, password)
+            }
         }
 
         btnGoogleLogin.setOnClickListener {

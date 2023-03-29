@@ -4,22 +4,22 @@
     <item
         android:id="@+id/steps"
         android:title="Steps"
-        android:icon="@drawable/logo"/>
+        android:icon="@drawable/stepsicon1"/>
     <item
         android:id="@+id/food"
         android:title="Food"
-        android:icon="@drawable/logo"/>
+        android:icon="@drawable/foodsearchicon"/>
     <item
         android:id="@+id/leaderboard"
         android:title="Leaderboard"
-        android:icon="@drawable/logo"/>
+        android:icon="@drawable/leaderboardicon"/>
     <item
         android:id="@+id/myFood"
         android:title="My Food"
-        android:icon="@drawable/logo"/>
+        android:icon="@drawable/foodlogo"/>
 
     <item
         android:id="@+id/profile"
         android:title="Profile"
-        android:icon="@drawable/logo"/>
+        android:icon="@drawable/profileicon"/>
 </menu>

@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rotate
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:fromDegrees="270"
-    android:toDegrees="270">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape
+            android:shape="ring"
+            android:thicknessRatio="30"
+            android:useLevel="false">
+            <solid android:color="#DDD" />
+        </shape>
+    </item>
+    <item>
+        <rotate
+            android:fromDegrees="270"
+            android:toDegrees="270">
+            <shape
+                android:shape="ring"
+                android:thicknessRatio="30"
+                android:useLevel="true">
+                <solid android:color="#000000" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>
+<!--<rotate-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:fromDegrees="270"-->
+<!--    android:toDegrees="270">-->
 
-    <!--styling the progress bar-->
-    <shape
-        android:innerRadiusRatio="2.5"
-        android:shape="ring"
-        android:thickness="8dp"
-        android:useLevel="true">
-        <gradient
-            android:angle="0"
-            android:endColor="@color/primary"
-            android:startColor="#000000"
-            android:type="sweep"
-            android:useLevel="false" />
-    </shape>
+<!--    &lt;!&ndash;styling the progress bar&ndash;&gt;-->
+<!--    <shape-->
+<!--        android:innerRadiusRatio="2.5"-->
+<!--        android:shape="ring"-->
+<!--        android:thickness="8dp"-->
+<!--        android:useLevel="true">-->
+<!--        <gradient-->
+<!--            android:angle="0"-->
+<!--            android:endColor="@color/primary"-->
+<!--            android:startColor="#000000"-->
+<!--            android:type="sweep"-->
+<!--            android:useLevel="false" />-->
+<!--    </shape>-->
 
-</rotate>
+<!--</rotate>-->

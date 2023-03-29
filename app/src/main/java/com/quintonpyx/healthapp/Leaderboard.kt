@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,15 +23,15 @@ class Leaderboard : AppCompatActivity() {
     private lateinit var userList: ArrayList<User>
     private lateinit var adapter: UserAdapter
     private lateinit var database:DatabaseReference
-    private lateinit var edtSteps: EditText
-    private lateinit var edtName: EditText
+    private lateinit var edtSteps: TextView
+    private lateinit var edtName: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leaderboard)
         database = Firebase.database.reference
-        val edtSteps = findViewById<EditText>(R.id.edtSteps)
-        val edtName = findViewById<EditText>(R.id.edtName)
+        val edtSteps = findViewById<TextView>(R.id.edtSteps)
+        val edtName = findViewById<TextView>(R.id.edtName)
 
         // menu code
         // Initialize and assign variable
