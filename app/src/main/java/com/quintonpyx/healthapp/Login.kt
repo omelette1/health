@@ -164,7 +164,7 @@ class Login : AppCompatActivity() {
                     finish()
                     startActivity(intent)
                 }else{
-                    Toast.makeText(this@Login,it.exception.toString(),Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@Login, it.exception?.message.toString(),Toast.LENGTH_LONG).show()
                 }
         }
     }

@@ -2,40 +2,35 @@ package com.quintonpyx.healthapp
 
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import android.content.Intent
+import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import java.sql.DriverManager.println
-import android.content.Intent
-
-import androidx.annotation.NonNull
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.quintonpyx.healthapp.helper.GeneralHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
-import com.quintonpyx.healthapp.User
+import com.quintonpyx.healthapp.callback.PedometerCallback
+import java.security.AccessController
 import java.util.*
 
-class MainActivity : AppCompatActivity(), SensorEventListener {
+class MainActivity : AppCompatActivity(), PedometerCallback {
 
     private lateinit var database: DatabaseReference
     private lateinit var user: FirebaseUser
@@ -45,7 +40,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var sensorManager: SensorManager? = null
 
     // variable gives the running status
-    private var running = false
+    private var running = true
 
     // variable counts total steps
     private var totalSteps = 0f
@@ -57,6 +52,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (isPermissionGranted()) {
+            requestPermission()
+        }
 
         user = FirebaseAuth.getInstance().currentUser!!
         database = Firebase.database.reference
@@ -82,18 +81,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             }
         }
 
-        val snapshot = database.child("user").child(user.uid)
+            // todo
+        val snapshot = database.child("user").child("102140716770738350326")
             .addListenerForSingleValueEvent(eventListener)
 
 
-
-        //check if permission isn't already granted, request the permission
-        if (isPermissionGranted()) {
-            requestPermission()
-        }
-
-        //initializing sensorManager instance
-        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+//
+//        //initializing sensorManager instance
+//        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         // menu code
         // Initialize and assign variable
@@ -138,117 +133,59 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             false
         })
 
-        running = true
+//        running = true
+//
+//        val stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+//
+//        if (stepSensor == null) {
+//            // show toast message, if there is no sensor in the device
+//            Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_LONG).show()
+//        } else {
+//            // register listener with sensorManager
+//            sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
+//        }
+//
+//        val sharedPreferences = getSharedPreferences("myPrefs",Context.MODE_PRIVATE)
+//        var tv_stepsTaken = findViewById<TextView>(R.id.tv_stepsTaken)
+//
+//        if (sharedPreferences.getString("date","") != GeneralHelper.getTodayDate()) {
+//            val stepsShown = 0
+//            tv_stepsTaken.text = ("$stepsShown")
+//            progressBar.setProgressWithAnimation(stepsShown.toFloat(),1000)
+//
+//        }
+//        createNotificationChannel()
 
-        val stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
-
-        if (stepSensor == null) {
-            // show toast message, if there is no sensor in the device
-            Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_LONG).show()
-        } else {
-            // register listener with sensorManager
-            sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
+         startService(Intent(this@MainActivity,PedometerService::class.java))
+        PedometerService.subscribe.register(this@MainActivity)
         }
 
-        val sharedPreferences = getSharedPreferences("myPrefs",Context.MODE_PRIVATE)
-        var tv_stepsTaken = findViewById<TextView>(R.id.tv_stepsTaken)
+//    override fun onResume() {
+//
+//        super.onResume()
+//        running = true
+//
+//        // TYPE_STEP_COUNTER:  A constant describing a step counter sensor
+//        // Returns the number of steps taken by the user since the last reboot while activated
+//        // This sensor requires permission android.permission.ACTIVITY_RECOGNITION.
+//        val stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+//
+//        if (stepSensor == null) {
+//            // show toast message, if there is no sensor in the device
+//            Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_LONG).show()
+//        } else {
+//            // register listener with sensorManager
+//            sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
+//        }
+//    }
 
-        if (sharedPreferences.getString("date","") != GeneralHelper.getTodayDate()) {
-            val stepsShown = 0
-            tv_stepsTaken.text = ("$stepsShown")
-            progressBar.setProgressWithAnimation(stepsShown.toFloat(),1000)
+//    override fun onPause() {
+//        super.onPause()
+//        running = false
+//        // unregister listener
+//        sensorManager?.unregisterListener(this)
+//    }
 
-        }
-        }
-
-    override fun onResume() {
-
-        super.onResume()
-        running = true
-
-        // TYPE_STEP_COUNTER:  A constant describing a step counter sensor
-        // Returns the number of steps taken by the user since the last reboot while activated
-        // This sensor requires permission android.permission.ACTIVITY_RECOGNITION.
-        val stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
-
-        if (stepSensor == null) {
-            // show toast message, if there is no sensor in the device
-            Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_LONG).show()
-        } else {
-            // register listener with sensorManager
-            sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        running = false
-        // unregister listener
-        sensorManager?.unregisterListener(this)
-    }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-
-
-//        Log.d("HAHaha","sensor is working")
-        // get textview by its id
-        var tv_stepsTaken = findViewById<TextView>(R.id.tv_stepsTaken)
-
-        if (running) {
-
-            //get the number of steps taken by the user.
-            totalSteps = event!!.values[0]
-            val currentSteps = totalSteps.toInt()
-
-
-            val sharedPreferences = getSharedPreferences("myPrefs",Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-
-            if (sharedPreferences.getString("date","") != GeneralHelper.getTodayDate()) {
-                editor.putInt("steps", currentSteps)
-//                Log.d("STEPSSAVED",currentSteps.toString())
-                editor.putString("date", GeneralHelper.getTodayDate())
-                editor.putInt("finalSteps", 0)
-
-                editor.commit()
-
-            } else {
-                Log.d("RAN","RAN")
-                val storeSteps = sharedPreferences.getInt("steps",0)
-                val sensorSteps = currentSteps
-                val finalSteps = sensorSteps - storeSteps
-
-                if (finalSteps >= 0) {
-                    editor.putInt("finalSteps", finalSteps)
-                    editor.commit()
-                }
-
-
-//                Log.d("FINALSTEP",sharedPreferences.getInt("steps",0).toString())
-//                Log.d("DATE", sharedPreferences.getString("date",GeneralHelper.getTodayDate())!!)
-
-            }
-//            editor.commit()
-
-            saveDataToFirebase(user,currentSteps)
-            // set current steps in textview
-            val stepsShown = sharedPreferences.getInt("finalSteps",0)
-            tv_stepsTaken.text = ("$stepsShown")
-            progressBar.setProgressWithAnimation(stepsShown.toFloat(),1000)
-        }
-    }
-
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-
-        println("onAccuracyChanged: Sensor: $sensor; accuracy: $accuracy")
-    }
-
-    private fun saveDataToFirebase(user: FirebaseUser, currentSteps:Int){
-        val newUser = User(user.displayName,user.email,user.uid, currentSteps)
-        val childUpdates= HashMap<String,Any>()
-        childUpdates.put("steps",currentSteps)
-        database.child("user").child(user.uid).updateChildren(childUpdates)
-    }
 
     private fun requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -270,6 +207,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         ) != PackageManager.PERMISSION_GRANTED
     }
 
+
+
     //handle requested permission result(allow or deny)
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -287,5 +226,22 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 }
             }
         }
+
+
+    }
+
+
+
+    override fun subscribeSteps(steps: Int) {
+        // get textview by its id
+        // set current steps in textview
+
+        var tv_stepsTaken = findViewById<TextView>(R.id.tv_stepsTaken)
+
+
+        tv_stepsTaken.text = ("$steps")
+
+        progressBar.setProgressWithAnimation(steps.toFloat(),1000)
+
     }
 }

@@ -11,4 +11,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_sign_up">SignUp</string>
     <string name="web_client_id">545793299744-v54dj86gie9l22rjvbbldqv9koheosh5.apps.googleusercontent.com</string>
+    <string name="channel_name">Notification Channel</string>
+    <string name="channel_description">Notification Channel</string>
+    <string name="reminders_notification_channel_id">Reminder Notification Channel ID</string>
+    <string name="title_notification_reminder">Health App Reminder</string>
+    <string name="description_notification_reminder">It\'s time go for a walk!</string>
 </resources>

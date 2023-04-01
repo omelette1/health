@@ -57,15 +57,16 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun signUp(name:String, email:String, password:String){
+        val newEmail = email.trim()
         // referenced from google firebase android password authentication documentation
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(newEmail, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
 //                    // Sign in success, update UI with the signed-in user's information
 //                    Log.d(TAG, "createUserWithEmail:success")
 //                    val user = auth.currentUser
 //                    updateUI(user)
-                    addUserToDatabase(name,email, mAuth.currentUser?.uid!!)
+                    addUserToDatabase(name,newEmail, mAuth.currentUser?.uid!!)
                     val intent = Intent(this@SignUp,Login::class.java)
                     Toast.makeText(this@SignUp, "Signed up successfully, please log in.", Toast.LENGTH_LONG).show()
                     finish()
