@@ -1,22 +1,16 @@
 package com.quintonpyx.healthapp
 
-import android.Manifest
 import android.app.Activity
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -27,10 +21,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.quintonpyx.healthapp.callback.PedometerCallback
 import com.quintonpyx.healthapp.helper.GeneralHelper
-import java.security.AccessController.getContext
 import java.sql.DriverManager
 import java.util.*
-import kotlin.math.roundToInt
 
 class PedometerService : Service(), SensorEventListener {
 

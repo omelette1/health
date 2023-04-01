@@ -30,9 +30,12 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>): Recycler
         holder.txtSteps.text = currentUser.steps.toString() +" steps"
         holder.txtPosition.text = (position+2).toString()
 
-        holder.itemView.setOnClickListener{
-//           // add user
+        holder.txtName.setOnClickListener{
+            val intent = Intent(this.context,OtherProfile::class.java)
+            intent.putExtra("uid",currentUser.uid)
+            this.context.startActivity(intent)
         }
+
     }
 
     override fun getItemCount(): Int {

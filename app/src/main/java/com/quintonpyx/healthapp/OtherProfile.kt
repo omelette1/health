@@ -26,35 +26,20 @@ import android.os.AsyncTask
 
 
 
-class Profile : AppCompatActivity() {
-    private lateinit var user: FirebaseUser
+class OtherProfile : AppCompatActivity() {
     private lateinit var imgProfile: ImageView
     private lateinit var txtName: TextView
-    private lateinit var txtUid: TextView
-    private lateinit var txtPhone:TextView
     private lateinit var txtNameDetail:TextView
-    private lateinit var txtEmail:TextView
     private lateinit var txtSteps:TextView
-    private lateinit var edtTargetSteps:EditText
     private lateinit var mDbRef: DatabaseReference
-    private lateinit var btnSave: Button
-    private lateinit var btnLogout: Button
-    private lateinit var mAuth: FirebaseAuth
 
-    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("545793299744-v54dj86gie9l22rjvbbldqv9koheosh5.apps.googleusercontent.com").requestEmail().build()
-//          R.string not updated
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(R.string.default_web_client_id).requestEmail().build()
 
-        googleSignInClient = GoogleSignIn.getClient(this,gso)
         // menu code
         // Initialize and assign variable
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
@@ -67,30 +52,32 @@ class Profile : AppCompatActivity() {
             when (item.itemId) {
                 R.id.food ->{
 
-                    startActivity(Intent(this@Profile, MainActivity2::class.java))
+                    startActivity(Intent(this@OtherProfile, MainActivity2::class.java))
                     // override default transition from page to page
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.steps ->{
-                    startActivity(Intent(this@Profile, MainActivity::class.java))
+                    startActivity(Intent(this@OtherProfile, MainActivity::class.java))
                     // override default transition from page to page
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.leaderboard -> {
-                    startActivity(Intent(this@Profile, Leaderboard::class.java))
+                    startActivity(Intent(this@OtherProfile, Leaderboard::class.java))
                     // override default transition from page to page
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.myFood -> {
-                    startActivity(Intent(this@Profile, MyFood::class.java))
+                    startActivity(Intent(this@OtherProfile, MyFood::class.java))
                     // override default transition from page to page
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true                }
                 R.id.profile -> {
-
+                    startActivity(Intent(this@OtherProfile, Profile::class.java))
+                    // override default transition from page to page
+                    overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
 
@@ -98,37 +85,31 @@ class Profile : AppCompatActivity() {
             false
         })
 
-        user = FirebaseAuth.getInstance().currentUser!!
         mDbRef = FirebaseDatabase.getInstance().getReference()
         txtName = findViewById(R.id.tv_name)
-        txtUid = findViewById(R.id.tv_uid)
         imgProfile = findViewById(R.id.imgProfile)
-        txtPhone = findViewById(R.id.tv_phone)
         txtNameDetail = findViewById(R.id.tv_name_detail)
-        txtEmail = findViewById(R.id.tv_email)
         txtSteps = findViewById(R.id.tv_steps)
-        edtTargetSteps = findViewById(R.id.edtTargetSteps)
-        btnSave = findViewById(R.id.btn_save)
-        btnLogout = findViewById(R.id.btn_logout)
-        mAuth = FirebaseAuth.getInstance()
 
         val eventListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     val currentUser = snapshot.getValue(User::class.java) as User
                     txtSteps.setText(currentUser.steps.toString())
-                    edtTargetSteps.setText(currentUser.targetSteps.toString())
                     txtName.setText(currentUser.name.toString())
                     txtNameDetail.setText(currentUser.name.toString())
-                } else {
 
+                    DownloadImageTask(imgProfile).execute(currentUser.photoUrl)
+
+                } else {
+                    Toast.makeText(this@OtherProfile,"User does not exist",Toast.LENGTH_LONG)
 
                 }
             }
 
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@Profile,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this@OtherProfile,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
             }
         }
 
@@ -140,35 +121,16 @@ class Profile : AppCompatActivity() {
 //            }
 //        }
 
-        val snapshot = mDbRef.child("user").child(user.uid)
+        val snapshot = mDbRef.child("user").child(intent.getStringExtra("uid").toString())
             .addListenerForSingleValueEvent(eventListener)
 
-        DownloadImageTask(imgProfile).execute(user.photoUrl.toString())
-        txtName.setText(user?.displayName)
-        txtUid.setText("UID: "+user?.uid)
-        txtNameDetail.setText(user?.displayName)
-        txtPhone.setText(user?.phoneNumber)
-        txtEmail.setText(user?.email)
-        btnSave.setOnClickListener {
-            val childUpdates= HashMap<String,Any>()
-            childUpdates.put("targetSteps",edtTargetSteps.text.toString().toInt())
-            mDbRef.child("user").child(user?.uid).updateChildren(childUpdates)
-            Toast.makeText(
-                this@Profile,"Daily Target Steps has been saved",Toast.LENGTH_LONG
-            ).show()
-        }
-        btnLogout.setOnClickListener {
-            mAuth.signOut()
-            // this must be signed out to ensure the app prompts for google account in second try
-            googleSignInClient.signOut()
-            startActivity(Intent(this@Profile,Login::class.java))
-        }
+
     }
 
 //    fun loadImageFromWebOperations(url: String?): Drawable? {
 //        try {
 //            val `is`: InputStream = URL(url).getContent() as InputStream
-//             return Drawable.createFromStream(`is`, "src name")
+//            return Drawable.createFromStream(`is`, "src name")
 //        } catch (e: Exception) {
 //            Log.d("IMAGEERROR",e.toString())
 //            return null

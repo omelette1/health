@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.service.autofill.Validators.and
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -16,7 +15,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.*
 import java.util.*
@@ -145,7 +143,7 @@ class Login : AppCompatActivity() {
 
                             } else {
                                 // User does not exist. NOW call createUserWithEmailAndPassword
-                                mDbRef.child("user").child(acc.id!!).setValue(User(acc.displayName,acc.email,acc.id,0))
+                                mDbRef.child("user").child(acc.id!!).setValue(User(acc.displayName,acc.email,acc.id,acc.photoUrl.toString(),0))
 
                                 // Your previous code here.
 

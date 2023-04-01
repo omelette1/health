@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.quintonpyx.healthapp">
+    package="com.quintonpyx.healthapp" >
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -16,7 +15,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HealthApp">
+        android:theme="@style/Theme.HealthApp" >
+        <activity
+            android:name=".OtherProfile"
+            android:exported="false" />
         <activity
             android:name=".Profile"
             android:exported="false" />
@@ -38,8 +40,8 @@
             android:name=".Login"
             android:exported="true"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.HealthApp.NoActionBar"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.HealthApp.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,7 +52,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.HealthApp.NoActionBar">
+            android:theme="@style/Theme.HealthApp.NoActionBar" >
 
             <!--
                             exported true means activity is accessible to any app
@@ -62,21 +64,19 @@
 
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
-        </activity>
-        <!-- Mention the service name here -->
-        <service android:name=".PedometerService"/>
+        </activity> <!-- Mention the service name here -->
+        <service android:name=".PedometerService" />
+
         <receiver
-            android:name="com.quintonpyx.healthapp.AlarmReceiver"
+            android:name=".AlarmReceiver"
             android:enabled="true" />
         <receiver
-            android:name="com.quintonpyx.healthapp.BootReceiver"
+            android:name=".BootReceiver"
             android:enabled="true"
-            android:exported="false">
-
+            android:exported="false" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-
         </receiver>
     </application>
 
