@@ -1,16 +1,9 @@
 package com.quintonpyx.healthapp
 
 import android.content.Intent
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextMenu
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
+import android.renderscript.Sampler.Value
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,12 +14,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.quintonpyx.healthapp.FoodAdapter
 import com.quintonpyx.healthapp.helper.GeneralHelper
-import com.quintonpyx.healthapp.viewModel.MainViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import java.util.*
 
 class MyFood : AppCompatActivity() {
@@ -38,6 +30,7 @@ class MyFood : AppCompatActivity() {
     private lateinit var mDbRef: DatabaseReference
     private lateinit var database:DatabaseReference
     private lateinit var txtCalorie:TextView
+    private lateinit var txtUnit:TextView
     private lateinit var user: FirebaseUser
 
 
@@ -48,6 +41,27 @@ class MyFood : AppCompatActivity() {
 
         txtCalorie = findViewById(R.id.tv_calories)
         database = Firebase.database.reference
+        txtUnit = findViewById(R.id.txtUnit)
+
+        val eventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    val currentUser = snapshot.getValue(User::class.java) as User
+                    txtUnit.setText("/ "+currentUser.targetCalorie.toString()+" kcal")
+                } else {
+
+
+                }
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@MyFood,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
+            }
+        }
+
+        val snapshot = database.child("user").child(user.uid)
+            .addListenerForSingleValueEvent(eventListener)
 
         // menu code
         // Initialize and assign variable
@@ -106,6 +120,7 @@ class MyFood : AppCompatActivity() {
         userFoodRecyclerView.layoutManager = LinearLayoutManager(this@MyFood
         )
         userFoodRecyclerView.adapter = adapter
+
 
         // get data
         val userFoodListener = object: ValueEventListener{

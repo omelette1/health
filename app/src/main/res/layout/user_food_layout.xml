@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Banana"
-        android:textSize="30sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
@@ -46,7 +46,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:layout_weight="3"
-        android:textAlignment="textEnd"
+        android:textAlignment="center"
         />
     <Button
         android:id="@+id/btnDelete"
@@ -57,7 +57,7 @@
         android:background="@drawable/btn_delete"
         android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         ></Button>
 </LinearLayout>
     <View
