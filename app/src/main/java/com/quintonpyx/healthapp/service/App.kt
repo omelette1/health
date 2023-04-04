@@ -42,6 +42,7 @@ class App: android.app.Application() {
             val channel = NotificationChannel(getString(R.string.reminders_notification_channel_id), name, importance).apply {
                 description = descriptionText
             }
+            channel.setSound(null,null)
             // Register the channel with the system
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

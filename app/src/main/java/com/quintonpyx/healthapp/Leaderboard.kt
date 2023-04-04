@@ -1,10 +1,14 @@
 package com.quintonpyx.healthapp
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +19,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import java.net.URL
 import java.util.*
 
 class Leaderboard : AppCompatActivity() {
@@ -25,7 +30,7 @@ class Leaderboard : AppCompatActivity() {
     private lateinit var database:DatabaseReference
     private lateinit var edtSteps: TextView
     private lateinit var edtName: TextView
-
+    private lateinit var imgChamp: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leaderboard)
@@ -96,6 +101,12 @@ class Leaderboard : AppCompatActivity() {
                 // champion
                 edtName.setText(userList[0].name)
                 edtSteps.setText(userList[0].steps.toString()+ " steps")
+                DownloadImageTask(imgChamp).execute(userList[0].photoUrl)
+                edtName.setOnClickListener {
+                    val intent = Intent(this@Leaderboard,OtherProfile::class.java)
+                    intent.putExtra("uid",userList[0].uid)
+                    startActivity(intent)
+                }
 
                 userList.removeAt(0)
                 adapter.notifyDataSetChanged()
@@ -110,5 +121,25 @@ class Leaderboard : AppCompatActivity() {
 
         database.child("user").orderByChild("steps").addValueEventListener(userListener)
 
+    }
+    private class DownloadImageTask(var imgChamp: ImageView) :
+        AsyncTask<String?, Void?, Bitmap?>() {
+        override fun doInBackground(vararg p0: String?): Bitmap? {
+            val urldisplay = p0[0]
+            var mIcon11: Bitmap? = null
+            try {
+                val `in` = URL(urldisplay).openStream()
+                mIcon11 = BitmapFactory.decodeStream(`in`)
+            } catch (e: Exception) {
+                Log.e("Error", e.message!!)
+                e.printStackTrace()
+            }
+            return mIcon11
+        }
+
+        override fun onPostExecute(result: Bitmap?) {
+            if (result != null)
+                imgChamp.setImageBitmap(result)
+        }
     }
 }

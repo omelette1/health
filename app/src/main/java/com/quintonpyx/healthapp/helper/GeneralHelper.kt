@@ -59,7 +59,7 @@ class GeneralHelper {
                 //.setProgress(this.dailyStepGoal, totalSteps, false)
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setSound(null)
+                .setSilent(true)
                 .setOngoing(true)
                 .build();
 
