@@ -37,7 +37,7 @@ class Leaderboard : AppCompatActivity() {
         database = Firebase.database.reference
         val edtSteps = findViewById<TextView>(R.id.edtSteps)
         val edtName = findViewById<TextView>(R.id.edtName)
-
+        val imgChamp = findViewById<ImageView>(R.id.championImage)
         // menu code
         // Initialize and assign variable
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
