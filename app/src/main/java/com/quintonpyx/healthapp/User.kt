@@ -15,11 +15,7 @@ class User {
 
     }
 
-<<<<<<< HEAD
-    constructor(name:String?,email:String?,uid:String?,photoUrl:String?,steps:Int = 0, targetSteps:Int = 0){
-=======
-    constructor(name:String?,email:String?,uid:String?,steps:Int = 0, targetSteps:Int = 0, targetCalorie:Int = 0){
->>>>>>> a4fa0919a9bafd165dad76e1222fe5a521db25ff
+    constructor(name:String?,email:String?,uid:String?,photoUrl:String?,steps:Int = 0, targetSteps:Int = 0, targetCalorie:Int = 0){
         this.name = name
         this.email = email
         this.uid = uid

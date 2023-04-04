@@ -36,54 +36,54 @@ class OtherProfile : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_other_profile)
 
 
 
-        // menu code
-        // Initialize and assign variable
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
-        // Set Home selected
-        bottomNavigationView.selectedItemId = R.id.profile
-
-        // Perform item selected listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.food ->{
-
-                    startActivity(Intent(this@OtherProfile, MainActivity2::class.java))
-                    // override default transition from page to page
-                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.steps ->{
-                    startActivity(Intent(this@OtherProfile, MainActivity::class.java))
-                    // override default transition from page to page
-                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.leaderboard -> {
-                    startActivity(Intent(this@OtherProfile, Leaderboard::class.java))
-                    // override default transition from page to page
-                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.myFood -> {
-                    startActivity(Intent(this@OtherProfile, MyFood::class.java))
-                    // override default transition from page to page
-                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true                }
-                R.id.profile -> {
-                    startActivity(Intent(this@OtherProfile, Profile::class.java))
-                    // override default transition from page to page
-                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true
-                }
-
-            }
-            false
-        })
+//        // menu code
+//        // Initialize and assign variable
+//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+//
+//        // Set Home selected
+//        bottomNavigationView.selectedItemId = R.id.profile
+//
+//        // Perform item selected listener
+//        bottomNavigationView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.food ->{
+//
+//                    startActivity(Intent(this@OtherProfile, MainActivity2::class.java))
+//                    // override default transition from page to page
+//                    overridePendingTransition(0, 0)
+//                    return@OnNavigationItemSelectedListener true
+//                }
+//                R.id.steps ->{
+//                    startActivity(Intent(this@OtherProfile, MainActivity::class.java))
+//                    // override default transition from page to page
+//                    overridePendingTransition(0, 0)
+//                    return@OnNavigationItemSelectedListener true
+//                }
+//                R.id.leaderboard -> {
+//                    startActivity(Intent(this@OtherProfile, Leaderboard::class.java))
+//                    // override default transition from page to page
+//                    overridePendingTransition(0, 0)
+//                    return@OnNavigationItemSelectedListener true
+//                }
+//                R.id.myFood -> {
+//                    startActivity(Intent(this@OtherProfile, MyFood::class.java))
+//                    // override default transition from page to page
+//                    overridePendingTransition(0, 0)
+//                    return@OnNavigationItemSelectedListener true                }
+//                R.id.profile -> {
+//                    startActivity(Intent(this@OtherProfile, Profile::class.java))
+//                    // override default transition from page to page
+//                    overridePendingTransition(0, 0)
+//                    return@OnNavigationItemSelectedListener true
+//                }
+//
+//            }
+//            false
+//        })
 
         mDbRef = FirebaseDatabase.getInstance().getReference()
         txtName = findViewById(R.id.tv_name)

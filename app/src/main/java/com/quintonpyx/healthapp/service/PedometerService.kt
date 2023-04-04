@@ -26,6 +26,16 @@ import java.util.*
 
 class PedometerService : Service(), SensorEventListener {
 
+    companion object{
+        lateinit var callback: PedometerCallback
+    }
+
+    object subscribe {
+        fun register(activity: Activity) {
+            callback = activity as PedometerCallback
+        }
+    }
+
 
     private var running = true
     private lateinit var user: FirebaseUser
@@ -48,9 +58,12 @@ class PedometerService : Service(), SensorEventListener {
         val eventListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
-                    val currentUser = snapshot.getValue(User::class.java) as User
-                    targetSteps = currentUser.targetSteps!!
-//                    Log.d("MAX",currentUser.targetSteps!!.toString())
+                    for(usr in snapshot.children){
+                        val currentUser = usr.getValue(User::class.java) as User
+                        targetSteps = currentUser.targetSteps!!
+                        Log.d("MAX",currentUser.targetSteps!!.toString())
+                    }
+
                 } else {
 
 
@@ -59,12 +72,12 @@ class PedometerService : Service(), SensorEventListener {
 
 
             override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(this,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(baseContext,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
             }
         }
 
-        val snapshot = database.child("user").child(user.uid)
-            .addListenerForSingleValueEvent(eventListener)
+        val snapshot = database.child("user").orderByChild("uid").equalTo(user.uid)
+                .addListenerForSingleValueEvent(eventListener)
 
         if(countSensor != null){
 //            Toast.makeText(this, "Step Detecting Start", Toast.LENGTH_SHORT).show()
@@ -73,7 +86,7 @@ class PedometerService : Service(), SensorEventListener {
             val sharedPreferences = getSharedPreferences("myPrefs",Context.MODE_PRIVATE)
 
             GeneralHelper.updateNotification(this, this, sharedPreferences.getInt("finalSteps",0),targetSteps)
-            callback.subscribeSteps(sharedPreferences.getInt("finalSteps",0))
+            callback?.subscribeSteps(sharedPreferences.getInt("finalSteps",0))
 
         }else{
             Toast.makeText(this, "Sensor Not Detected", Toast.LENGTH_SHORT).show()
@@ -143,22 +156,15 @@ class PedometerService : Service(), SensorEventListener {
 
 
     private fun saveDataToFirebase(user: FirebaseUser, currentSteps:Int){
-        val newUser = User(user.displayName,user.email,user.uid, currentSteps)
+        val newUser = User(user.displayName,user.email,user.uid, user.photoUrl.toString(),currentSteps)
         val childUpdates= HashMap<String,Any>()
         childUpdates.put("steps",currentSteps)
         database.child("user").child(user.uid).updateChildren(childUpdates)
     }
 
-    companion object{
-        lateinit var callback: PedometerCallback
-    }
 
 
-    object subscribe {
-        fun register(activity: Activity) {
-            callback = activity as PedometerCallback
-        }
-    }
+
 
 
 

@@ -16,9 +16,11 @@ import java.util.*
 
 class UserAdapter(val context: Context, val userList: ArrayList<User>): RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
 //        Log.d("TAG","RAN")
+        mAuth = FirebaseAuth.getInstance()
 
         val view:View = LayoutInflater.from(context).inflate(R.layout.user_layout,parent,false)
         return UserViewHolder(view)
@@ -26,9 +28,17 @@ class UserAdapter(val context: Context, val userList: ArrayList<User>): Recycler
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val currentUser = userList[position]
-        holder.txtName.text = currentUser.name
         holder.txtSteps.text = currentUser.steps.toString() +" steps"
         holder.txtPosition.text = (position+2).toString()
+
+        if(currentUser.uid== mAuth.currentUser?.uid){
+            // if the user is current user (You)
+            holder.txtName.text = currentUser.name +" (You)"
+            holder.txtName.setTextColor(context.resources.getColor(R.color.primary))
+        }else{
+            holder.txtName.text = currentUser.name
+
+        }
 
         holder.txtName.setOnClickListener{
             val intent = Intent(this.context,OtherProfile::class.java)

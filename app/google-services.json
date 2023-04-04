@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "545793299744-0aensgfnjkf120sikgk76i9t2eccuksu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quintonpyx.healthapp",
+            "certificate_hash": "504b0e12a581b7618078018bed306f1778aeb052"
+          }
+        },
+        {
           "client_id": "545793299744-hmhngpsgono91pm57u2noe0nm1o0816k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -53,6 +53,8 @@ class MainActivity : AppCompatActivity(), PedometerCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        startService(Intent(this@MainActivity,PedometerService::class.java))
+        PedometerService.subscribe.register(this@MainActivity)
         if (isPermissionGranted()) {
             requestPermission()
         }
@@ -65,10 +67,13 @@ class MainActivity : AppCompatActivity(), PedometerCallback {
         val eventListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
-                    val currentUser = snapshot.getValue(User::class.java) as User
-                    txtUnit.setText("/ "+currentUser.targetSteps.toString()+" steps")
-                    progressBar.progressMax = currentUser.targetSteps!!.toFloat()
+                    for(usr in snapshot.children){
+                        val currentUser = usr.getValue(User::class.java) as User
+                        txtUnit.setText("/ "+currentUser.targetSteps.toString()+" steps")
+                        progressBar.progressMax = currentUser.targetSteps!!.toFloat()
 //                    Log.d("MAX",currentUser.targetSteps!!.toString())
+                    }
+
                 } else {
 
 
@@ -81,8 +86,7 @@ class MainActivity : AppCompatActivity(), PedometerCallback {
             }
         }
 
-            // todo
-        val snapshot = database.child("user").child("102140716770738350326")
+        val snapshot = database.child("user").orderByChild("uid").equalTo(user.uid)
             .addListenerForSingleValueEvent(eventListener)
 
 
@@ -156,8 +160,7 @@ class MainActivity : AppCompatActivity(), PedometerCallback {
 //        }
 //        createNotificationChannel()
 
-         startService(Intent(this@MainActivity,PedometerService::class.java))
-        PedometerService.subscribe.register(this@MainActivity)
+
         }
 
 //    override fun onResume() {
