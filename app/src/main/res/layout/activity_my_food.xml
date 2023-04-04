@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/title_layout"
-        android:layout_width="match_parent"
+        android:id="@+id/titleLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="35dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:text="Your Calories Today"
             android:textColor="@color/black"
             android:textSize="40sp"
@@ -29,55 +27,83 @@
     </LinearLayout>
 
     <!--progress bar implementation-->
-
-
-    <RelativeLayout
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/titleLayout"
         android:id="@+id/progress_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="2"
-        android:gravity="center">
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
 
-        <!--Text implementation in center of the progress bar-->
-        <TextView
-            android:id="@+id/tv_calories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:text="---"
-            android:textColor="@color/primary"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/progressBar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/txtUnit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_calories"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="40dp"
-            android:gravity="center"
-            android:text="kcal"
-            android:textColor="@color/placeHolderText"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+        <!--progress bar implementation-->
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cpb_background_progressbar_color="@color/gray"
+                app:cpb_background_progressbar_width="10dp"
+                app:cpb_progress_direction="to_right"
+                app:cpb_progressbar_color="@color/primary"
+                app:cpb_progressbar_width="10dp"
+                app:cpb_round_border="false" />
+
+            <LinearLayout
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/progressText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <!--Text implementation in center of the progress bar-->
+                <TextView
+                    android:id="@+id/tv_calories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="---"
+                    android:textColor="@color/primary"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="kcal"
+                    android:textColor="@color/placeHolderText"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/userFoodRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
-            android:layout_below="@+id/txtUnit"
+            android:layout_height="425dp"
             android:layout_gravity="bottom"
             tools:listitem="@layout/food_layout" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -89,4 +115,4 @@
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/menu_navigation" />
 
-</LinearLayout>
+</RelativeLayout>
