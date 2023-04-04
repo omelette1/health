@@ -21,9 +21,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 
 import android.os.AsyncTask
-
-
-
+import kotlin.collections.HashMap
 
 
 class Profile : AppCompatActivity() {
@@ -36,6 +34,7 @@ class Profile : AppCompatActivity() {
     private lateinit var txtEmail:TextView
     private lateinit var txtSteps:TextView
     private lateinit var edtTargetSteps:EditText
+    private lateinit var edtTargetCalorie:EditText
     private lateinit var mDbRef: DatabaseReference
     private lateinit var btnSave: Button
     private lateinit var btnLogout: Button
@@ -108,6 +107,7 @@ class Profile : AppCompatActivity() {
         txtEmail = findViewById(R.id.tv_email)
         txtSteps = findViewById(R.id.tv_steps)
         edtTargetSteps = findViewById(R.id.edtTargetSteps)
+        edtTargetCalorie = findViewById(R.id.edtTargetCalorie)
         btnSave = findViewById(R.id.btn_save)
         btnLogout = findViewById(R.id.btn_logout)
         mAuth = FirebaseAuth.getInstance()
@@ -118,6 +118,7 @@ class Profile : AppCompatActivity() {
                     val currentUser = snapshot.getValue(User::class.java) as User
                     txtSteps.setText(currentUser.steps.toString())
                     edtTargetSteps.setText(currentUser.targetSteps.toString())
+                    edtTargetCalorie.setText(currentUser.targetCalorie.toString())
                     txtName.setText(currentUser.name.toString())
                     txtNameDetail.setText(currentUser.name.toString())
                 } else {
@@ -154,7 +155,13 @@ class Profile : AppCompatActivity() {
             childUpdates.put("targetSteps",edtTargetSteps.text.toString().toInt())
             mDbRef.child("user").child(user?.uid).updateChildren(childUpdates)
             Toast.makeText(
-                this@Profile,"Daily Target Steps has been saved",Toast.LENGTH_LONG
+                this@Profile,"Daily Target Steps has been saved",Toast.LENGTH_SHORT
+            ).show()
+            val calorieUpdates= HashMap<String, Any>()
+            calorieUpdates.put("targetCalorie",edtTargetCalorie.text.toString().toInt())
+            mDbRef.child("user").child(user?.uid).updateChildren(calorieUpdates)
+            Toast.makeText(
+                this@Profile, "Daily Target Calorie has been saved",Toast.LENGTH_SHORT
             ).show()
         }
         btnLogout.setOnClickListener {
