@@ -65,8 +65,8 @@ class SignUp : AppCompatActivity() {
 //                    val user = auth.currentUser
 //                    updateUI(user)
                     addUserToDatabase(name,newEmail, mAuth.currentUser?.uid!!)
-                    val intent = Intent(this@SignUp,Login::class.java)
-                    Toast.makeText(this@SignUp, "Signed up successfully, please log in.", Toast.LENGTH_LONG).show()
+                    val intent = Intent(this@SignUp,MainActivity::class.java)
+//                    Toast.makeText(this@SignUp, "Signed up successfully, please log in.", Toast.LENGTH_LONG).show()
                     finish()
                     startActivity(intent)
 

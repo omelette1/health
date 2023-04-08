@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -31,6 +32,8 @@ class Leaderboard : AppCompatActivity() {
     private lateinit var edtSteps: TextView
     private lateinit var edtName: TextView
     private lateinit var imgChamp: ImageView
+    private lateinit var user: FirebaseUser
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leaderboard)
@@ -41,6 +44,7 @@ class Leaderboard : AppCompatActivity() {
         // menu code
         // Initialize and assign variable
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        user = FirebaseAuth.getInstance().currentUser!!
 
         // Set Home selected
         bottomNavigationView.selectedItemId = R.id.leaderboard
@@ -99,12 +103,19 @@ class Leaderboard : AppCompatActivity() {
                 Collections.reverse(userList)
 
                 // champion
-                edtName.setText(userList[0].name)
+                if(userList[0].uid==user.uid){
+                    edtName.setText(userList[0].name+ " (You)")
+
+                }else{
+                    edtName.setText(userList[0].name)
+
+                }
                 edtSteps.setText(userList[0].steps.toString()+ " steps")
+                val uid = userList[0].uid.toString()
                 DownloadImageTask(imgChamp).execute(userList[0].photoUrl)
                 edtName.setOnClickListener {
                     val intent = Intent(this@Leaderboard,OtherProfile::class.java)
-                    intent.putExtra("uid",userList[0].uid)
+                    intent.putExtra("uid",uid)
                     startActivity(intent)
                 }
 

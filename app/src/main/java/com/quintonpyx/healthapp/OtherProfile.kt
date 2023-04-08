@@ -30,6 +30,8 @@ class OtherProfile : AppCompatActivity() {
     private lateinit var imgProfile: ImageView
     private lateinit var txtName: TextView
     private lateinit var txtNameDetail:TextView
+    private lateinit var txtEmailDetail:TextView
+
     private lateinit var txtSteps:TextView
     private lateinit var mDbRef: DatabaseReference
 
@@ -90,16 +92,20 @@ class OtherProfile : AppCompatActivity() {
         imgProfile = findViewById(R.id.imgProfile)
         txtNameDetail = findViewById(R.id.tv_name_detail)
         txtSteps = findViewById(R.id.tv_steps)
+        txtEmailDetail = findViewById(R.id.tv_email)
 
         val eventListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
-                    val currentUser = snapshot.getValue(User::class.java) as User
-                    txtSteps.setText(currentUser.steps.toString())
-                    txtName.setText(currentUser.name.toString())
-                    txtNameDetail.setText(currentUser.name.toString())
+                    for(usr in snapshot.children){
+                        val currentUser = usr.getValue(User::class.java) as User
+                        txtSteps.setText(currentUser.steps.toString())
+                        txtName.setText(currentUser.name.toString())
+                        txtNameDetail.setText(currentUser.name.toString())
+                        txtEmailDetail.setText(currentUser.email.toString())
+                        DownloadImageTask(imgProfile).execute(currentUser.photoUrl)
 
-                    DownloadImageTask(imgProfile).execute(currentUser.photoUrl)
+                    }
 
                 } else {
                     Toast.makeText(this@OtherProfile,"User does not exist",Toast.LENGTH_LONG)
@@ -121,7 +127,7 @@ class OtherProfile : AppCompatActivity() {
 //            }
 //        }
 
-        val snapshot = mDbRef.child("user").child(intent.getStringExtra("uid").toString())
+        val snapshot = mDbRef.child("user").orderByChild("uid").equalTo(intent.getStringExtra("uid").toString())
             .addListenerForSingleValueEvent(eventListener)
 
 

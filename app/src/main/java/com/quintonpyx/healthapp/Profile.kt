@@ -21,6 +21,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 
 import android.os.AsyncTask
+import java.lang.Integer.parseInt
 import kotlin.collections.HashMap
 
 
@@ -151,18 +152,23 @@ class Profile : AppCompatActivity() {
         txtPhone.setText(user?.phoneNumber)
         txtEmail.setText(user?.email)
         btnSave.setOnClickListener {
-            val childUpdates= HashMap<String,Any>()
-            childUpdates.put("targetSteps",edtTargetSteps.text.toString().toInt())
-            mDbRef.child("user").child(user?.uid).updateChildren(childUpdates)
-            Toast.makeText(
-                this@Profile,"Daily Target Steps has been saved",Toast.LENGTH_SHORT
-            ).show()
-            val calorieUpdates= HashMap<String, Any>()
-            calorieUpdates.put("targetCalorie",edtTargetCalorie.text.toString().toInt())
-            mDbRef.child("user").child(user?.uid).updateChildren(calorieUpdates)
-            Toast.makeText(
-                this@Profile, "Daily Target Calorie has been saved",Toast.LENGTH_SHORT
-            ).show()
+            if(parseInt(edtTargetSteps.text.toString())<100){
+                Toast.makeText(this@Profile,"Target Steps must be larger than 100",Toast.LENGTH_LONG).show()
+            }else{
+                val childUpdates= HashMap<String,Any>()
+                childUpdates.put("targetSteps",edtTargetSteps.text.toString().toInt())
+                mDbRef.child("user").child(user?.uid).updateChildren(childUpdates)
+                Toast.makeText(
+                    this@Profile,"Daily Target Steps has been saved",Toast.LENGTH_SHORT
+                ).show()
+                val calorieUpdates= HashMap<String, Any>()
+                calorieUpdates.put("targetCalorie",edtTargetCalorie.text.toString().toInt())
+                mDbRef.child("user").child(user?.uid).updateChildren(calorieUpdates)
+                Toast.makeText(
+                    this@Profile, "Daily Target Calorie has been saved",Toast.LENGTH_SHORT
+                ).show()
+            }
+
         }
         btnLogout.setOnClickListener {
             mAuth.signOut()

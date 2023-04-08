@@ -22,6 +22,7 @@ import com.google.firebase.ktx.Firebase
 import com.quintonpyx.healthapp.callback.PedometerCallback
 import com.quintonpyx.healthapp.helper.GeneralHelper
 import java.sql.DriverManager
+import java.text.SimpleDateFormat
 import java.util.*
 
 class PedometerService : Service(), SensorEventListener {
@@ -61,7 +62,7 @@ class PedometerService : Service(), SensorEventListener {
                     for(usr in snapshot.children){
                         val currentUser = usr.getValue(User::class.java) as User
                         targetSteps = currentUser.targetSteps!!
-                        Log.d("MAX",currentUser.targetSteps!!.toString())
+//                        Log.d("MAX",currentUser.targetSteps!!.toString())
                     }
 
                 } else {
@@ -79,14 +80,25 @@ class PedometerService : Service(), SensorEventListener {
         val snapshot = database.child("user").orderByChild("uid").equalTo(user.uid)
                 .addListenerForSingleValueEvent(eventListener)
 
+        val sharedPreferences = getSharedPreferences("myPrefs",Context.MODE_PRIVATE)
+
         if(countSensor != null){
 //            Toast.makeText(this, "Step Detecting Start", Toast.LENGTH_SHORT).show()
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_NORMAL)
 
             val sharedPreferences = getSharedPreferences("myPrefs",Context.MODE_PRIVATE)
 
-            GeneralHelper.updateNotification(this, this, sharedPreferences.getInt("finalSteps",0),targetSteps)
-            callback?.subscribeSteps(sharedPreferences.getInt("finalSteps",0))
+
+            if(sharedPreferences.getString("date","") != GeneralHelper.getTodayDate()||sharedPreferences.getString("userUid","")!=user.uid){
+                GeneralHelper.updateNotification(this, this, sharedPreferences.getInt("finalSteps",0),targetSteps)
+                callback?.subscribeSteps(sharedPreferences.getInt("finalSteps",0))
+
+            }else{
+                GeneralHelper.updateNotification(this, this, 0,targetSteps)
+                callback?.subscribeSteps(0)
+
+            }
+
 
         }else{
             Toast.makeText(this, "Sensor Not Detected", Toast.LENGTH_SHORT).show()
@@ -116,23 +128,49 @@ class PedometerService : Service(), SensorEventListener {
             val editor = sharedPreferences.edit()
 
             if (sharedPreferences.getString("date","") != GeneralHelper.getTodayDate()) {
-                editor.putInt("steps", currentSteps)
-//                Log.d("STEPSSAVED",currentSteps.toString())
-                editor.putString("date", GeneralHelper.getTodayDate())
-                editor.putInt("finalSteps", 0)
+                if(sharedPreferences.getString("userUid","")!=user.uid){
+                    editor.putString("userUid", user.uid.toString())
 
-                editor.commit()
+                    editor.putInt("steps", currentSteps)
+//                Log.d("STEPSSAVED",currentSteps.toString())
+                    editor.putString("date", GeneralHelper.getTodayDate())
+                    editor.putInt("finalSteps", 0)
+
+                    editor.commit()
+                }else{
+
+                    editor.putInt("steps", currentSteps)
+//                Log.d("STEPSSAVED",currentSteps.toString())
+                    editor.putString("date", GeneralHelper.getTodayDate())
+                    editor.putInt("finalSteps", 0)
+                    editor.commit()
+
+                }
+
 
             } else {
-                Log.d("RAN","RAN")
-                val storeSteps = sharedPreferences.getInt("steps",0)
-                val sensorSteps = currentSteps
-                val finalSteps = sensorSteps - storeSteps
 
-                if (finalSteps >= 0) {
-                    editor.putInt("finalSteps", finalSteps)
+                if(sharedPreferences.getString("userUid","")!=user.uid) {
+                    editor.putString("userUid", user.uid.toString())
+
+                    editor.putInt("steps", currentSteps)
+//                Log.d("STEPSSAVED",currentSteps.toString())
+                    editor.putString("date", GeneralHelper.getTodayDate())
+                    editor.putInt("finalSteps", 0)
+
                     editor.commit()
+                }else{
+                    val storeSteps = sharedPreferences.getInt("steps",0)
+                    val sensorSteps = currentSteps
+                    val finalSteps = sensorSteps - storeSteps
+
+                    if (finalSteps >= 0) {
+                        editor.putInt("finalSteps", finalSteps)
+                        editor.commit()
+                    }
                 }
+
+
 
 
 //                Log.d("FINALSTEP",sharedPreferences.getInt("steps",0).toString())
@@ -143,8 +181,39 @@ class PedometerService : Service(), SensorEventListener {
 
 
             GeneralHelper.updateNotification(this, this, sharedPreferences.getInt("finalSteps",0),targetSteps)
-            callback.subscribeSteps(sharedPreferences.getInt("finalSteps",0))
-            saveDataToFirebase(user,currentSteps)
+            callback?.subscribeSteps(sharedPreferences.getInt("finalSteps",0))
+            // add to previous day if it is a new day
+                val eventListener = object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.exists()){
+                            for(usr in snapshot.children){
+                                val currentUser = usr.getValue(User::class.java) as User
+                                val previousSteps = currentUser.yesterdaySteps!!
+                                if(currentUser.lastUpdated!=GeneralHelper.getTodayDate()){
+                                    saveDataToFirebase(user,sharedPreferences.getInt("finalSteps",0)+previousSteps,true,currentUser.steps!!)
+
+                                }else{
+                                    saveDataToFirebase(user,sharedPreferences.getInt("finalSteps",0)+previousSteps,false)
+
+                                }
+
+                            }
+
+                        } else {
+
+
+                        }
+                    }
+
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(baseContext,"Error: "+error.toString(), Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                val snapshot = database.child("user").orderByChild("uid").equalTo(user.uid)
+                    .addListenerForSingleValueEvent(eventListener)
+
 
         }
     }
@@ -155,11 +224,20 @@ class PedometerService : Service(), SensorEventListener {
     }
 
 
-    private fun saveDataToFirebase(user: FirebaseUser, currentSteps:Int){
-        val newUser = User(user.displayName,user.email,user.uid, user.photoUrl.toString(),currentSteps)
-        val childUpdates= HashMap<String,Any>()
-        childUpdates.put("steps",currentSteps)
-        database.child("user").child(user.uid).updateChildren(childUpdates)
+    private fun saveDataToFirebase(user: FirebaseUser, currentSteps:Int, newDayInd:Boolean,resetSteps:Int=0){
+
+        if(newDayInd){
+            val childUpdates= HashMap<String,Any>()
+            childUpdates.put("steps",currentSteps)
+            childUpdates.put("yesterdaySteps",resetSteps)
+            childUpdates.put("lastUpdated",GeneralHelper.getTodayDate())
+            database.child("user").child(user.uid).updateChildren(childUpdates)
+        }else{
+            val childUpdates= HashMap<String,Any>()
+            childUpdates.put("steps",currentSteps)
+            database.child("user").child(user.uid).updateChildren(childUpdates)
+        }
+
     }
 
 
