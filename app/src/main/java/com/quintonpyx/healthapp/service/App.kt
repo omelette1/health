@@ -10,25 +10,24 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.quintonpyx.healthapp.R
 import com.quintonpyx.healthapp.RemindersManager
+import com.quintonpyx.healthapp.networking.ApiConfig
+import com.quintonpyx.healthapp.networking.SpoonacularApiService
 
-// this is the wrapper file for the whole app
-class App: android.app.Application() {
+// This is the wrapper file for the whole app
+class App : android.app.Application() {
+
+    lateinit var apiService: SpoonacularApiService // Declare apiService
 
     override fun onCreate() {
         super.onCreate()
 
+        // Initialize the apiService
+        apiService = ApiConfig.getApiService()
 
         createNotificationChannel()
         createNotificationChannel2()
         RemindersManager.startReminder(this)
-
     }
-
-
-
-
-
-
 
     private fun createNotificationChannel() {
         val CHANNEL_ID = "CHANNEL_ID"
@@ -42,13 +41,14 @@ class App: android.app.Application() {
             val channel = NotificationChannel(getString(R.string.reminders_notification_channel_id), name, importance).apply {
                 description = descriptionText
             }
-            channel.setSound(null,null)
+            channel.setSound(null, null)
             // Register the channel with the system
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
+
     private fun createNotificationChannel2() {
         val CHANNEL_ID = "CHANNEL_ID2"
 
@@ -67,6 +67,4 @@ class App: android.app.Application() {
             notificationManager.createNotificationChannel(channel)
         }
     }
-
-
 }

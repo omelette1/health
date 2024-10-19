@@ -1,17 +1,15 @@
 package com.quintonpyx.healthapp
 
-class Food {
-    // val is immutable, var is mutable
-    var name:String? = null
-    var calorie:Int? = null
+data class IngredientSearchResponse(
+    val results: List<Ingredient>, // This property holds the list of ingredients
+    val offset: Int,
+    val number: Int,
+    val totalResults: Int
+)
 
-    constructor(){
+data class Ingredient(
+    val id: Int,
+    val name: String,
+    val image: String
+)
 
-    }
-
-    constructor(name:String?,calorie:Int?){
-        this.name = name
-        this.calorie = calorie
-
-    }
-}

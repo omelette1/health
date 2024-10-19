@@ -1,15 +1,11 @@
 <component name="libraryTable">
-  <library name="Gradle: com.google.android.gms:play-services-fido:19.0.1@aar">
+  <library name="Gradle: com.google.android.gms:play-services-fido:19.0.1@aar" external-system-id="GRADLE">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-3/36db604d5d895bac7c179db83598cb81/transformed/jetified-play-services-fido-19.0.1/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-3/36db604d5d895bac7c179db83598cb81/transformed/jetified-play-services-fido-19.0.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/36db604d5d895bac7c179db83598cb81/transformed/jetified-play-services-fido-19.0.1/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/36db604d5d895bac7c179db83598cb81/transformed/jetified-play-services-fido-19.0.1/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/36db604d5d895bac7c179db83598cb81/transformed/jetified-play-services-fido-19.0.1/jars/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/8.9/transforms/848fe9606f30588af19dd8f9391b2021/transformed/jetified-play-services-fido-19.0.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/8.9/transforms/848fe9606f30588af19dd8f9391b2021/transformed/jetified-play-services-fido-19.0.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-fido/19.0.1/f47139b88eb38e62585ec100c1ef8a4cb73b5ce5/play-services-fido-19.0.1-javadoc.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-fido/19.0.1/f47139b88eb38e62585ec100c1ef8a4cb73b5ce5/play-services-fido-19.0.1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>

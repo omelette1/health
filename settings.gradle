@@ -1,10 +1,18 @@
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+// settings.gradle
+pluginManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS) // Keep this line
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+
 rootProject.name = "Health App"
 include ':app'

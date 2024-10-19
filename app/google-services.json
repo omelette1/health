@@ -1,53 +1,26 @@
 {
   "project_info": {
-    "project_number": "545793299744",
-    "firebase_url": "https://health-app-25dac-default-rtdb.firebaseio.com",
-    "project_id": "health-app-25dac",
-    "storage_bucket": "health-app-25dac.appspot.com"
+    "project_number": "777446830594",
+    "project_id": "health-e372e",
+    "storage_bucket": "health-e372e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:545793299744:android:b5298e5168cda498b1b345",
+        "mobilesdk_app_id": "1:777446830594:android:85a1ec6644caf9aaeaed1b",
         "android_client_info": {
           "package_name": "com.quintonpyx.healthapp"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "545793299744-0aensgfnjkf120sikgk76i9t2eccuksu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.quintonpyx.healthapp",
-            "certificate_hash": "504b0e12a581b7618078018bed306f1778aeb052"
-          }
-        },
-        {
-          "client_id": "545793299744-hmhngpsgono91pm57u2noe0nm1o0816k.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.quintonpyx.healthapp",
-            "certificate_hash": "38500272bd3f8dd3fc08e2e92aa3609d4375c833"
-          }
-        },
-        {
-          "client_id": "545793299744-v54dj86gie9l22rjvbbldqv9koheosh5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB9cecTSs9eGqeU1Si5mJRrf2y8EWuYeW0"
+          "current_key": "AIzaSyBAuEdoq29uNSW14OkTguMkCH2G0TURNbk"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "545793299744-2b12aqb3slgbmfkpb9b1ihd4jpe1ro42.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
